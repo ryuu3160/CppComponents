@@ -23,6 +23,9 @@
     <Filter Include="_Manual_">
       <UniqueIdentifier>{7d58270c-e331-467a-882b-c08d2a81f8b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameManager">
+      <UniqueIdentifier>{958d386c-ef0c-4464-8971-23cd5b6d94a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton\Singleton.hpp">
@@ -46,6 +49,9 @@
     <ClInclude Include="_Manual_\SingletonManual.hpp">
       <Filter>_Manual_</Filter>
     </ClInclude>
+    <ClInclude Include="FrameManager\FrameManager.hpp">
+      <Filter>FrameManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Singleton\SingletonController.cpp">
@@ -65,6 +71,9 @@
     </ClCompile>
     <ClCompile Include="_Manual_\Manual.cpp">
       <Filter>_Manual_</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameManager\FrameManager.cpp">
+      <Filter>FrameManager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

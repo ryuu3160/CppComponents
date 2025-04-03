@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClInclude Include="CRC31_HashGenerator\HashGenerator.hpp" />
     <ClInclude Include="Easing\Easing.hpp" />
+    <ClInclude Include="FrameManager\FrameManager.hpp" />
     <ClInclude Include="Observer\Observer.hpp" />
     <ClInclude Include="RandomModule\Random.hpp" />
     <ClInclude Include="Singleton\Singleton.hpp" />
@@ -145,6 +146,7 @@
   <ItemGroup>
     <ClCompile Include="CRC31_HashGenerator\HashGenerator.cpp" />
     <ClCompile Include="Easing\Easing.cpp" />
+    <ClCompile Include="FrameManager\FrameManager.cpp" />
     <ClCompile Include="Observer\Observer.cpp" />
     <ClCompile Include="RandomModule\Random.cpp" />
     <ClCompile Include="Singleton\SingletonController.cpp" />
