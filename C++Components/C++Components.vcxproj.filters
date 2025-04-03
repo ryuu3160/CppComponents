@@ -31,6 +31,9 @@
     <ClInclude Include="Observer\Observer.hpp">
       <Filter>Observer</Filter>
     </ClInclude>
+    <ClInclude Include="RandomModule\Random.hpp">
+      <Filter>RandomModule</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Singleton\SingletonController.cpp">
@@ -38,6 +41,9 @@
     </ClCompile>
     <ClCompile Include="Observer\Observer.cpp">
       <Filter>Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomModule\Random.cpp">
+      <Filter>RandomModule</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -132,11 +132,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Observer\Observer.hpp" />
+    <ClInclude Include="RandomModule\Random.hpp" />
     <ClInclude Include="Singleton\Singleton.hpp" />
     <ClInclude Include="Singleton\SingletonController.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Observer\Observer.cpp" />
+    <ClCompile Include="RandomModule\Random.cpp" />
     <ClCompile Include="Singleton\SingletonController.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
