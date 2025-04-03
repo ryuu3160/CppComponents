@@ -13,5 +13,5 @@
 
 # 更新履歴
 
-2025/4/4 リポジトリの作成、CRC31_HashGenerator・Easing・Observer・RandomModule・Singletonの追加
-         マニュアルの追加
+2025/4/4 リポジトリの作成、CRC31_HashGenerator・Easing・Observer・RandomModule・Singletonの追加<br>
+ditto　　 マニュアルの追加
