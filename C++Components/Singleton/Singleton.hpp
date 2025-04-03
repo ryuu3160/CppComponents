@@ -1,10 +1,10 @@
 /*+==========================================================================
 * File : Singleton.h
-* Author : Yuichiro Aoki
-* Date : 07/27/2024
+* Author : ryuu3160
+* Date : 2024/07/27
 * Note : mozc式シングルトン
 * 
-* (C) 2024 Yuichiro Aoki. All Rights Reserved.
+* (C) 2024 ryuu3160. All Rights Reserved.
 =============================================================================+*/
 #pragma once
 
@@ -12,7 +12,6 @@
 //	include
 // ==============================
 #include "SingletonController.hpp"
-#include <mutex>
 
 /// <summary>
 /// シングルトンクラス
@@ -50,7 +49,7 @@ protected:
     static void create()
     {
         m_instance = new T;
-        SingletonController::addController(&Singleton<T>::destroy);
+        SingletonController::AddController(&Singleton<T>::destroy);
     }
     /// <summary>
     /// 生成したインスタンスの破棄
