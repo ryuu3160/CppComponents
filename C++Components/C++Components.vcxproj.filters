@@ -28,10 +28,16 @@
     <ClInclude Include="Singleton\SingletonController.hpp">
       <Filter>Singleton</Filter>
     </ClInclude>
+    <ClInclude Include="Observer\Observer.hpp">
+      <Filter>Observer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Singleton\SingletonController.cpp">
       <Filter>Singleton</Filter>
+    </ClCompile>
+    <ClCompile Include="Observer\Observer.cpp">
+      <Filter>Observer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
