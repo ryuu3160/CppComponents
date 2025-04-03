@@ -20,6 +20,9 @@
     <Filter Include="CRC31_HashGenerator">
       <UniqueIdentifier>{8537de63-342e-4903-9404-24be0d03ebe3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="_Manual_">
+      <UniqueIdentifier>{7d58270c-e331-467a-882b-c08d2a81f8b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton\Singleton.hpp">
@@ -40,6 +43,9 @@
     <ClInclude Include="Easing\Easing.hpp">
       <Filter>Easing</Filter>
     </ClInclude>
+    <ClInclude Include="_Manual_\SingletonManual.hpp">
+      <Filter>_Manual_</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Singleton\SingletonController.cpp">
@@ -56,6 +62,9 @@
     </ClCompile>
     <ClCompile Include="Easing\Easing.cpp">
       <Filter>Easing</Filter>
+    </ClCompile>
+    <ClCompile Include="_Manual_\Manual.cpp">
+      <Filter>_Manual_</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

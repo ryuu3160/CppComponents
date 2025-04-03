@@ -137,6 +137,10 @@
     <ClInclude Include="RandomModule\Random.hpp" />
     <ClInclude Include="Singleton\Singleton.hpp" />
     <ClInclude Include="Singleton\SingletonController.hpp" />
+    <ClInclude Include="_Manual_\SingletonManual.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CRC31_HashGenerator\HashGenerator.cpp" />
@@ -144,6 +148,7 @@
     <ClCompile Include="Observer\Observer.cpp" />
     <ClCompile Include="RandomModule\Random.cpp" />
     <ClCompile Include="Singleton\SingletonController.cpp" />
+    <ClCompile Include="_Manual_\Manual.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
