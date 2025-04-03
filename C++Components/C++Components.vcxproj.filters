@@ -37,6 +37,9 @@
     <ClInclude Include="CRC31_HashGenerator\HashGenerator.hpp">
       <Filter>CRC31_HashGenerator</Filter>
     </ClInclude>
+    <ClInclude Include="Easing\Easing.hpp">
+      <Filter>Easing</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Singleton\SingletonController.cpp">
@@ -50,6 +53,9 @@
     </ClCompile>
     <ClCompile Include="CRC31_HashGenerator\HashGenerator.cpp">
       <Filter>CRC31_HashGenerator</Filter>
+    </ClCompile>
+    <ClCompile Include="Easing\Easing.cpp">
+      <Filter>Easing</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
