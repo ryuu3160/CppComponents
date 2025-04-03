@@ -131,12 +131,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CRC31_HashGenerator\HashGenerator.hpp" />
     <ClInclude Include="Observer\Observer.hpp" />
     <ClInclude Include="RandomModule\Random.hpp" />
     <ClInclude Include="Singleton\Singleton.hpp" />
     <ClInclude Include="Singleton\SingletonController.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CRC31_HashGenerator\HashGenerator.cpp" />
     <ClCompile Include="Observer\Observer.cpp" />
     <ClCompile Include="RandomModule\Random.cpp" />
     <ClCompile Include="Singleton\SingletonController.cpp" />

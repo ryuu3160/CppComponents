@@ -34,6 +34,9 @@
     <ClInclude Include="RandomModule\Random.hpp">
       <Filter>RandomModule</Filter>
     </ClInclude>
+    <ClInclude Include="CRC31_HashGenerator\HashGenerator.hpp">
+      <Filter>CRC31_HashGenerator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Singleton\SingletonController.cpp">
@@ -44,6 +47,9 @@
     </ClCompile>
     <ClCompile Include="RandomModule\Random.cpp">
       <Filter>RandomModule</Filter>
+    </ClCompile>
+    <ClCompile Include="CRC31_HashGenerator\HashGenerator.cpp">
+      <Filter>CRC31_HashGenerator</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
