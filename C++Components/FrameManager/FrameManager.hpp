@@ -5,6 +5,7 @@
 	Date: 2024/08/17	   初回作成
 			  /11/19 10:14 クラス全体の改良
 		  2025/04/08 11:40 クラス全体のリファクタリング
+				 /09 03:07 大幅なリファクタリング
 
 	(C) 2021 ryuu3160. All rights reserved.
 ===================================================================+*/
@@ -16,6 +17,9 @@
 #include "../Singleton/Singleton.hpp"
 #include <windows.h>
 #include <unordered_map>
+// timeGetTimeなどを使うために必要
+#include <mmsystem.h>
+#pragma comment(lib, "winmm.lib")
 
 /// <summary>
 /// フレームレート管理クラス
@@ -49,7 +53,7 @@ public:
 	/// <param name="[In_strName]">フレームデータ名</param>
 	/// <param name="[In_fFps]">フレームレート(1サイクルで処理したいフレーム数)</param>
 	/// <param name="[In_nLapTime]">1サイクルにかける時間(デフォルトは1秒)</param>
-	void AppendLimitation(std::string In_strName, float In_fFps, unsigned int In_nLapTime = 1);
+	void AppendLimitation(const std::string &In_strName, float In_fFps, unsigned int In_nLapTime = 1);
 
 	/// <summary>
 	/// <para>間隔をあけるフレームデータの追加</para>
@@ -58,26 +62,26 @@ public:
 	/// <param name="[In_strName]">フレームデータ名</param>
 	/// <param name="[In_fTrueFrame]">trueにするフレーム数</param>
 	/// <param name="[In_fIntervalFrame]">falseにするフレーム数</param>
-	void AppendInterval(std::string In_strName, float In_fTrueFrame, float In_fIntervalFrame);
+	void AppendInterval(const std::string &In_strName, float In_fTrueFrame, float In_fIntervalFrame);
 
 	/// <summary>
 	/// 指定したフレームデータの更新
 	/// </summary>
 	/// <param name="[In_strName]">フレームデータ名</param>
 	/// <returns>設定したフレーム数を超えていた場合trueを返す</returns>
-	bool Update(std::string In_strName);
+	bool Update(const std::string &In_strName);
 
 	/// <summary>
 	/// 指定したフレームデータのカウントをリセット
 	/// </summary>
 	/// <param name="[In_strName]">フレームデータ名</param>
-	void FrameCountReset(std::string In_strName);
+	void FrameCountReset(const std::string &In_strName);
 
 	/// <summary>
 	/// 指定したフレームデータの切替回数をリセット
 	/// </summary>
 	/// <param name="[In_strName]">フレームデータ名</param>
-	void SwitchCountReset(std::string In_strName);
+	void SwitchCountReset(const std::string &In_strName);
 
 	/// <summary>
 	/// 指定したフレームデータのフレームレートの変更
@@ -85,7 +89,7 @@ public:
 	/// <param name="[In_strName]">フレームデータ名</param>
 	/// <param name="[In_fFps]">フレームレート</param>
 	/// <param name="[In_nLapTime]">1サイクルにかける時間(デフォルトは1秒)</param>
-	void ChangeFps(std::string In_strName, float In_fFps,unsigned int In_nLapTime = 1);
+	void ChangeFps(const std::string &In_strName, float In_fFps,unsigned int In_nLapTime = 1);
 
 	/// <summary>
 	/// <para>指定したフレームデータのTrue-False切替フレーム数の変更</para>
@@ -94,27 +98,27 @@ public:
 	/// <param name="[In_strName]">フレームデータ名</param>
 	/// <param name="[In_fTrueFrame]">trueにするフレーム数</param>
 	/// <param name="[In_fIntervalFrame]">falseにするフレーム数</param>
-	void ChangeIntervalFrame(std::string In_strName, float In_fTrueFrame = -1, float In_fIntervalFrame = -1);
+	void ChangeIntervalFrame(const std::string &In_strName, float In_fTrueFrame = -1, float In_fIntervalFrame = -1);
 
 	/// <summary>
 	/// 指定したフレームデータが合計で何回TRUEとFALSEを切り替えたかを取得
 	/// </summary>
 	/// <param name="[In_strName]">フレームデータ名</param>
 	/// <returns>切り替え回数 ※フレームデータが存在しない場合は-1を返す</returns>
-	int GetSwitchCount(std::string In_strName);
+	int GetSwitchCount(const std::string &In_strName);
 
 	/// <summary>
 	/// タイムカウンターを追加
 	/// </summary>
 	/// <param name="[In_strName]">カウンター名</param>
 	/// <param name="[In_bIsStartNow]">すぐに計測を開始するか</param>
-	void AppendTimeCounter(std::string In_strName, bool In_bIsStartNow = false);
+	void AppendTimeCounter(const std::string &In_strName, bool In_bIsStartNow = false);
 
 	/// <summary>
 	/// タイムカウンターの計測を開始
 	/// </summary>
 	/// <param name="[In_strName]">カウンター名</param>
-	void StartTimeCounter(std::string In_strName);
+	void StartTimeCounter(const std::string &In_strName);
 
 	/// <summary>
 	/// 全てのタイムカウンターの更新
@@ -125,7 +129,7 @@ public:
 	/// タイムカウンターの更新
 	/// </summary>
 	/// <param name="[In_strName]">カウンター名</param>
-	void UpdateTimeCounter(std::string In_strName);
+	void UpdateTimeCounter(const std::string &In_strName);
 
 	/// <summary>
 	/// 全てのタイムカウンターを止める
@@ -136,7 +140,7 @@ public:
 	/// タイムカウンターを止める
 	/// </summary>
 	/// <param name="[In_strName]">カウンター名</param>
-	void StopTimeCounter(std::string In_strName);
+	void StopTimeCounter(const std::string &In_strName);
 
 	/// <summary>
 	/// 全てのタイムカウンターをリセット
@@ -147,20 +151,20 @@ public:
 	/// タイムカウンターをリセット
 	/// </summary>
 	/// <param name="[In_strName]">カウンター名</param>
-	void ResetTimeCounter(std::string In_strName);
+	void ResetTimeCounter(const std::string &In_strName);
 
 	/// <summary>
 	/// タイムカウンターを秒に変換し取得
 	/// </summary>
 	/// <param name="[In_strName]">カウンター名</param>
 	/// <returns>秒</returns>
-	float GetTimeCountSecond(std::string In_strName);
+	float GetTimeCountSecond(const std::string &In_strName);
 
 	/// <summary>
 	/// フレームデータの削除
 	/// </summary>
 	/// <param name="[In_strName]">フレームデータ名</param>
-	void Delete(std::string In_strName);
+	void Delete(const std::string &In_strName);
 
 private:
 	FrameManager();
@@ -172,6 +176,11 @@ private:
 	DWORD m_dwOldTime;
 	float m_fMainFps;
 	bool m_bMainExists;
+
+	// スレッドセーフのためのミューテックス
+	std::mutex m_mutexFrameLimit;
+	std::mutex m_mutexInterval;
+	std::mutex m_mutexTimeCounter;
 
 	/// <summary>
 	/// フレームデータ構造体
@@ -221,16 +230,8 @@ private:
 	bool UpdateInterval(std::unordered_map<std::string, IntervalData>::iterator In_itr);
 
 	/// <summary>
-	/// FrameLimitDataを取得
+	/// フレームデータが存在するか
 	/// </summary>
-	/// <param name="[In_strName]">データ名</param>
-	/// <returns>探索結果へのイテレータ</returns>
-	std::unordered_map<std::string, FrameLimitData>::iterator FindFrameLimit(std::string In_strName);
-
-	/// <summary>
-	/// IntervalDataを取得
-	/// </summary>
-	/// <param name="[In_strName]">データ名</param>
-	/// <returns>探索結果へのイテレータ</returns>
-	std::unordered_map<std::string, IntervalData>::iterator FindInterval(std::string In_strName);
+	/// <param name="[In_strName]">フレームデータ名</param>
+	bool CheckExistsLimitAndInterval(const std::string &In_strName);
 };

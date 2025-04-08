@@ -5,6 +5,7 @@
 	Date: 2024/08/17	   初回作成
 			  /11/19 10:14 クラス全体の改良
 		  2025/04/08 11:40 クラス全体のリファクタリング
+				 /09 03:07 大幅なリファクタリング
 
 	(C) 2021 ryuu3160. All rights reserved.
 ===================================================================+*/
@@ -51,25 +52,20 @@ DWORD FrameManager::GetMainTime()
 	return m_dwTime;
 }
 
-void FrameManager::AppendLimitation(std::string In_strName, float In_fFps, unsigned int In_nLapTime)
+void FrameManager::AppendLimitation(const std::string &In_strName, float In_fFps, unsigned int In_nLapTime)
 {
+	// スレッドセーフにするためのロック
+	std::lock_guard<std::mutex> lock(m_mutexFrameLimit);
+
 	if (In_fFps > m_fMainFps) // メインのfpsよりも大きい値を設定できない
 	{
-		OutputDebugStringA("error : FrameManager Error : Cannot set a value greater than the \"Main fps\"\n");
+		throw std::invalid_argument("\"Main fps\"よりも大きな値を設定することはできません。");
 		return;
 	}
 
-	// フレームデータ名がLimitation,Intervalのどちらかに既に存在する場合はエラーメッセージを出力して、スキップ
-	if (m_mapFrameLimitData.find(In_strName) != m_mapFrameLimitData.end())
-	{
-		OutputDebugStringA("error : FrameManager Error : This name already exists in \"Limitation\"\n");
+	// 重複チェック
+	if (CheckExistsLimitAndInterval(In_strName))
 		return;
-	}
-	else if (m_mapIntervalData.find(In_strName) != m_mapIntervalData.end())
-	{
-		OutputDebugStringA("error : FrameManager Error : This name already exists in \"Interval\"\n");
-		return;
-	}
 
 	FrameLimitData data{};
 	data.m_nFrameCount = 0;			// フレームのカウント
@@ -81,19 +77,14 @@ void FrameManager::AppendLimitation(std::string In_strName, float In_fFps, unsig
 	m_mapFrameLimitData[In_strName] = data;	// フレームデータの追加
 }
 
-void FrameManager::AppendInterval(std::string In_strName, float In_fTrueFrame, float In_fIntervalFrame)
+void FrameManager::AppendInterval(const std::string &In_strName, float In_fTrueFrame, float In_fIntervalFrame)
 {
-	// フレームデータ名がLimitation,Intervalのどちらかに既に存在する場合はエラーメッセージを出力して、スキップ
-	if (m_mapFrameLimitData.find(In_strName) != m_mapFrameLimitData.end())
-	{
-		OutputDebugStringA("error : FrameManager Error : This name already exists in \"Limitation\"\n");
+	// スレッドセーフにするためのロック
+	std::lock_guard<std::mutex> lock(m_mutexInterval);
+	
+	// 重複チェック
+	if (CheckExistsLimitAndInterval(In_strName))
 		return;
-	}
-	else if (m_mapIntervalData.find(In_strName) != m_mapIntervalData.end())
-	{
-		OutputDebugStringA("error : FrameManager Error : This name already exists in \"Interval\"\n");
-		return;
-	}
 
 	IntervalData data{};
 	data.FrameData.m_nFrameCount = 0;		// フレームのカウント
@@ -108,45 +99,41 @@ void FrameManager::AppendInterval(std::string In_strName, float In_fTrueFrame, f
 	m_mapIntervalData[In_strName] = data;	// フレームデータの追加
 }
 
-bool FrameManager::Update(std::string In_strName)
+bool FrameManager::Update(const std::string &In_strName)
 {
-	// マルチスレッドで2つのmapを同時探索
-	// Update関数では速度を優先するため、マルチスレッドを採用
-	std::future<std::unordered_map<std::string, FrameLimitData>::iterator> FrameLimit
-		= std::async(std::launch::async,&FrameManager::FindFrameLimit,this, In_strName);
-	std::future<std::unordered_map<std::string, IntervalData>::iterator> Interval
-		= std::async(std::launch::async, &FrameManager::FindInterval, this, In_strName);
+	auto LimitItr = m_mapFrameLimitData.find(In_strName);	// フレームデータの探索
+	std::unordered_map<std::string, IntervalData>::iterator IntervalItr; // インターバルデータのイテレータ
 
-	auto LimitItr = FrameLimit.get();
-	auto IntervalItr = Interval.get();
+	// フレームデータの探索
 	if (LimitItr != m_mapFrameLimitData.end())
 	{
-		return UpdateLimitation(LimitItr);	// フレームデータの更新
+		return UpdateLimitation(LimitItr);	// フレームデータの更新処理
 	}
-	else if(IntervalItr != m_mapIntervalData.end())
+	// インターバルデータの探索
+	else if ((IntervalItr = m_mapIntervalData.find(In_strName)) != m_mapIntervalData.end())
 	{
-		return UpdateInterval(IntervalItr);	// 間隔をあけるバージョン
+		return UpdateInterval(IntervalItr);	// 間隔をあけるバージョンの更新処理
 	}
 
 	// フレームデータが存在しない場合はfalseを返す
 	return false;
 }
 
-void FrameManager::FrameCountReset(std::string In_strName)
+void FrameManager::FrameCountReset(const std::string &In_strName)
 {
 	auto itr = m_mapFrameLimitData.find(In_strName);
 	if (itr != m_mapFrameLimitData.end())
 		itr->second.m_nFrameCount = 0;	// フレームのカウントをリセット
 }
 
-void FrameManager::SwitchCountReset(std::string In_strName)
+void FrameManager::SwitchCountReset(const std::string &In_strName)
 {
 	auto itr = m_mapFrameLimitData.find(In_strName);
 	if (itr != m_mapFrameLimitData.end())
 		itr->second.m_nSwitchCount = 0;	// 切替回数のリセット
 }
 
-void FrameManager::ChangeFps(std::string In_strName, float In_fFps, unsigned int In_nLapTime)
+void FrameManager::ChangeFps(const std::string &In_strName, float In_fFps, unsigned int In_nLapTime)
 {
 	auto itr = m_mapFrameLimitData.find(In_strName);
 	if (itr != m_mapFrameLimitData.end())
@@ -155,7 +142,7 @@ void FrameManager::ChangeFps(std::string In_strName, float In_fFps, unsigned int
 	}
 }
 
-void FrameManager::ChangeIntervalFrame(std::string In_strName, float In_fTrueFrame, float In_fIntervalFrame)
+void FrameManager::ChangeIntervalFrame(const std::string &In_strName, float In_fTrueFrame, float In_fIntervalFrame)
 {
 	auto itr = m_mapIntervalData.find(In_strName);
 	if (itr != m_mapIntervalData.end())
@@ -167,7 +154,7 @@ void FrameManager::ChangeIntervalFrame(std::string In_strName, float In_fTrueFra
 	}
 }
 
-int FrameManager::GetSwitchCount(std::string In_strName)
+int FrameManager::GetSwitchCount(const std::string &In_strName)
 {
 	auto itr = m_mapFrameLimitData.find(In_strName);
 	if (itr != m_mapFrameLimitData.end())
@@ -176,12 +163,16 @@ int FrameManager::GetSwitchCount(std::string In_strName)
 		return -1;
 }
 
-void FrameManager::AppendTimeCounter(std::string In_strName, bool In_bIsStartNow)
+void FrameManager::AppendTimeCounter(const std::string &In_strName, bool In_bIsStartNow)
 {
+	// スレッドセーフにするためのロック
+	std::lock_guard<std::mutex> lock(m_mutexTimeCounter);
+
+	// 名前の重複チェック
 	if (m_mapTimeCounter.find(In_strName) != m_mapTimeCounter.end())
 		return;
 
-	TimeCountData data;
+	TimeCountData data{};
 	data.m_dwCount = 0;
 	
 	// すぐに計測を始めるかどうか
@@ -193,7 +184,7 @@ void FrameManager::AppendTimeCounter(std::string In_strName, bool In_bIsStartNow
 	m_mapTimeCounter[In_strName] = data; // データ追加
 }
 
-void FrameManager::StartTimeCounter(std::string In_strName)
+void FrameManager::StartTimeCounter(const std::string &In_strName)
 {
 	auto itr = m_mapTimeCounter.find(In_strName);
 	if (itr != m_mapTimeCounter.end())
@@ -209,7 +200,7 @@ void FrameManager::UpdateAllTimeCounter()
 	}
 }
 
-void FrameManager::UpdateTimeCounter(std::string In_strName)
+void FrameManager::UpdateTimeCounter(const std::string &In_strName)
 {
 	auto itr = m_mapTimeCounter.find(In_strName);
 	if (itr == m_mapTimeCounter.end())
@@ -227,7 +218,7 @@ void FrameManager::StopAllTimeCounter()
 	}
 }
 
-void FrameManager::StopTimeCounter(std::string In_strName)
+void FrameManager::StopTimeCounter(const std::string &In_strName)
 {
 	auto itr = m_mapTimeCounter.find(In_strName);
 	if(itr != m_mapTimeCounter.end())
@@ -240,14 +231,14 @@ void FrameManager::ResetAllTimeCounter()
 		data.second.m_dwCount = 0;
 }
 
-void FrameManager::ResetTimeCounter(std::string In_strName)
+void FrameManager::ResetTimeCounter(const std::string &In_strName)
 {
 	auto itr = m_mapTimeCounter.find(In_strName);
 	if (itr != m_mapTimeCounter.end())
 		itr->second.m_dwCount = 0;	// カウントをリセット
 }
 
-float FrameManager::GetTimeCountSecond(std::string In_strName)
+float FrameManager::GetTimeCountSecond(const std::string &In_strName)
 {
 	auto itr = m_mapTimeCounter.find(In_strName);
 	if (itr == m_mapTimeCounter.end())
@@ -256,7 +247,7 @@ float FrameManager::GetTimeCountSecond(std::string In_strName)
 	return static_cast<float>(itr->second.m_dwCount) / m_fMainFps;
 }
 
-void FrameManager::Delete(std::string In_strName)
+void FrameManager::Delete(const std::string &In_strName)
 {
 	auto itr = m_mapFrameLimitData.find(In_strName);
 	if (itr != m_mapFrameLimitData.end()) m_mapFrameLimitData.erase(itr);	// フレームデータの削除
@@ -294,34 +285,37 @@ bool FrameManager::UpdateInterval(std::unordered_map<std::string, IntervalData>:
 	//現在フレームの更新
 	In_itr->second.FrameData.m_nFrameCount++;
 
-	if (In_itr->second.bReturn)
-	{
-		if (In_itr->second.FrameData.m_nFrameCount >= In_itr->second.FrameData.m_fAdvanceFrame)
-		{
-			In_itr->second.FrameData.m_nFrameCount = 0;// フレームのカウントをリセット
-			In_itr->second.FrameData.m_nSwitchCount++; // 切替回数のカウント
-			In_itr->second.bReturn = false;
-		}
-	}
+	// 現在のReturnの状態に応じて、フレーム数の目標値を取得
+	float fFrame;
+	if(In_itr->second.bReturn)
+		fFrame = In_itr->second.FrameData.m_fAdvanceFrame;
 	else
+		fFrame = In_itr->second.fIntervalFrame;
+
+	// フレームレートの制限
+	if (In_itr->second.FrameData.m_nFrameCount >= fFrame)
 	{
-		if (In_itr->second.FrameData.m_nFrameCount >= In_itr->second.fIntervalFrame)
-		{
-			In_itr->second.FrameData.m_nFrameCount = 0;// フレームのカウントをリセット
-			In_itr->second.FrameData.m_nSwitchCount++; // 切替回数のカウント
-			In_itr->second.bReturn = true;
-		}
+		In_itr->second.FrameData.m_nFrameCount = 0;// フレームのカウントをリセット
+		In_itr->second.FrameData.m_nSwitchCount++; // 切替回数のカウント
+		In_itr->second.bReturn = !In_itr->second.bReturn; // Returnの状態を反転
 	}
 
 	return In_itr->second.bReturn;
 }
 
-std::unordered_map<std::string, FrameManager::FrameLimitData>::iterator FrameManager::FindFrameLimit(std::string In_strName)
+bool FrameManager::CheckExistsLimitAndInterval(const std::string &In_strName)
 {
-	return m_mapFrameLimitData.find(In_strName);
-}
+	// フレームデータ名がLimitation,Intervalのどちらかに既に存在する場合はエラーメッセージを出力して、スキップ
+	if (m_mapFrameLimitData.find(In_strName) != m_mapFrameLimitData.end())
+	{
+		throw std::invalid_argument("この名前は既に\"Limitation\"で使用されています。");
+		return true;
+	}
+	else if (m_mapIntervalData.find(In_strName) != m_mapIntervalData.end())
+	{
+		throw std::invalid_argument("この名前は既に\"Interval\"で使用されています。");
+		return true;
+	}
 
-std::unordered_map<std::string, FrameManager::IntervalData>::iterator FrameManager::FindInterval(std::string In_strName)
-{
-	return m_mapIntervalData.find(In_strName);
+	return false;
 }
