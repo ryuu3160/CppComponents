@@ -3,7 +3,8 @@
 	Summary: フレームレート管理クラスのヘッダファイル
 	Author: ryuu3160
 	Date: 2024/08/17	   初回作成
-			   11/19 10:14 クラス全体の改良
+			  /11/19 10:14 クラス全体の改良
+		  2025/04/08 11:40 クラス全体のリファクタリング
 
 	(C) 2021 ryuu3160. All rights reserved.
 ===================================================================+*/
@@ -42,13 +43,13 @@ public:
 	DWORD GetMainTime();
 
 	/// <summary>
-	/// <para>管理するフレームデータの追加</para>
+	/// <para>フレームレート制限の追加</para>
 	/// <para>フレームレートはメインのfpsよりも大きな値は設定できない</para>
 	/// </summary>
 	/// <param name="[In_strName]">フレームデータ名</param>
 	/// <param name="[In_fFps]">フレームレート(1サイクルで処理したいフレーム数)</param>
 	/// <param name="[In_nLapTime]">1サイクルにかける時間(デフォルトは1秒)</param>
-	void Append(std::string In_strName, float In_fFps, unsigned int In_nLapTime = 1);
+	void AppendLimitation(std::string In_strName, float In_fFps, unsigned int In_nLapTime = 1);
 
 	/// <summary>
 	/// <para>間隔をあけるフレームデータの追加</para>
@@ -175,34 +176,61 @@ private:
 	/// <summary>
 	/// フレームデータ構造体
 	/// </summary>
-	struct FrameData
+	struct FrameLimitData
 	{
 		int m_nFrameCount;			// フレームのカウント
 		int m_nSwitchCount;			// 何回切り替えたか
 		unsigned int m_nLapTime;	// 1サイクルにかける時間
 		float m_fAdvanceFrame;		// 何メインフレームごとにフレームを進めるか
-		float m_fIntervalFrame;		// フレームの間隔
-		bool m_bReturn;				// 間隔をあけたサイクルに使う
-		bool m_bIsInterval;			// 間隔をあけるかどうか
 	};
 
+	/// <summary>
+	/// インターバルで使用する構造体
+	/// </summary>
+	struct IntervalData
+	{
+		FrameLimitData FrameData;	// フレームデータ
+		float fIntervalFrame;		// フレームの間隔
+		bool bReturn;				// 間隔をあけたサイクルに使う
+	};
+
+	/// <summary>
+	/// カウント用の構造体
+	/// </summary>
 	struct TimeCountData
 	{
-		DWORD m_dwCount;			// カウント
-		bool m_bIsStart;			// 計測中か
-
-		float m_fTimeSecond; // 秒
-		float m_fTimeMinute; // 分
-		float m_fTimeHour; // 時
+		DWORD m_dwCount;	// カウント
+		bool m_bIsStart;	// 計測中か
 	};
 
-	std::unordered_map<std::string, FrameData> m_mapFrameData;	// フレームデータ
-	std::unordered_map<std::string, TimeCountData> m_mapTimeCounter;	// 時間計測用
+	std::unordered_map<std::string, FrameLimitData> m_mapFrameLimitData;	// フレームデータ
+	std::unordered_map<std::string, IntervalData> m_mapIntervalData;		// インターバルデータ
+	std::unordered_map<std::string, TimeCountData> m_mapTimeCounter;		// 時間計測用
 private:
+
+	/// <summary>
+	/// フレームデータの更新
+	/// </summary>
+	/// <param name="[In_itr]">更新するフレームデータ</param>
+	bool UpdateLimitation(std::unordered_map<std::string, FrameLimitData>::iterator In_itr);
 
 	/// <summary>
 	/// フレームデータの更新(間隔をあけるバージョン)
 	/// </summary>
 	/// <param name="[In_itr]">更新するフレームデータ</param>
-	bool UpdateInterval(std::unordered_map<std::string,FrameData>::iterator In_itr);
+	bool UpdateInterval(std::unordered_map<std::string, IntervalData>::iterator In_itr);
+
+	/// <summary>
+	/// FrameLimitDataを取得
+	/// </summary>
+	/// <param name="[In_strName]">データ名</param>
+	/// <returns>探索結果へのイテレータ</returns>
+	std::unordered_map<std::string, FrameLimitData>::iterator FindFrameLimit(std::string In_strName);
+
+	/// <summary>
+	/// IntervalDataを取得
+	/// </summary>
+	/// <param name="[In_strName]">データ名</param>
+	/// <returns>探索結果へのイテレータ</returns>
+	std::unordered_map<std::string, IntervalData>::iterator FindInterval(std::string In_strName);
 };
