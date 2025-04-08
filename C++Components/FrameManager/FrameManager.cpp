@@ -60,12 +60,10 @@ void FrameManager::AppendLimitation(const std::string &In_strName, float In_fFps
 	if (In_fFps > m_fMainFps) // メインのfpsよりも大きい値を設定できない
 	{
 		throw std::invalid_argument("\"Main fps\"よりも大きな値を設定することはできません。");
-		return;
 	}
 
 	// 重複チェック
-	if (CheckExistsLimitAndInterval(In_strName))
-		return;
+	CheckExistsLimitAndInterval(In_strName);
 
 	FrameLimitData data{};
 	data.m_nFrameCount = 0;			// フレームのカウント
@@ -83,8 +81,7 @@ void FrameManager::AppendInterval(const std::string &In_strName, float In_fTrueF
 	std::lock_guard<std::mutex> lock(m_mutexInterval);
 	
 	// 重複チェック
-	if (CheckExistsLimitAndInterval(In_strName))
-		return;
+	CheckExistsLimitAndInterval(In_strName);
 
 	IntervalData data{};
 	data.FrameData.m_nFrameCount = 0;		// フレームのカウント
@@ -303,19 +300,15 @@ bool FrameManager::UpdateInterval(std::unordered_map<std::string, IntervalData>:
 	return In_itr->second.bReturn;
 }
 
-bool FrameManager::CheckExistsLimitAndInterval(const std::string &In_strName)
+void FrameManager::CheckExistsLimitAndInterval(const std::string &In_strName)
 {
 	// フレームデータ名がLimitation,Intervalのどちらかに既に存在する場合はエラーメッセージを出力して、スキップ
 	if (m_mapFrameLimitData.find(In_strName) != m_mapFrameLimitData.end())
 	{
 		throw std::invalid_argument("この名前は既に\"Limitation\"で使用されています。");
-		return true;
 	}
 	else if (m_mapIntervalData.find(In_strName) != m_mapIntervalData.end())
 	{
 		throw std::invalid_argument("この名前は既に\"Interval\"で使用されています。");
-		return true;
 	}
-
-	return false;
 }

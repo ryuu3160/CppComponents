@@ -233,5 +233,5 @@ private:
 	/// フレームデータが存在するか
 	/// </summary>
 	/// <param name="[In_strName]">フレームデータ名</param>
-	bool CheckExistsLimitAndInterval(const std::string &In_strName);
+	void CheckExistsLimitAndInterval(const std::string &In_strName);
 };
