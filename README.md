@@ -14,5 +14,5 @@
 # 更新履歴
 
 2025/04/04 リポジトリの作成、CRC31_HashGenerator・Easing・FrameManager・Observer・RandomModule・Singletonの追加<br>
-ditto　　 　マニュアルの追加
-2025/04/08 FrameManagerのリファクタリング
+ditto　　 　マニュアルの追加<br>
+2025/04/08 FrameManagerのリファクタリング<br>
