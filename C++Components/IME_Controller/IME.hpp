@@ -168,7 +168,7 @@ private:
 	bool m_bIME_Enabled;		// IMEが有効かどうか
 	bool m_bTypeEnabled;		// 文字入力が有効かどうか
 
-	LOGFONTA m_LogFont;			// フォント情報
+	LPLOGFONTA m_pLogFont;		// フォント情報
 	int m_nFontSize;			// フォントサイズ
 
 	SF2Position m_f2CompositionWindowPos; // 入力ウィンドウの位置

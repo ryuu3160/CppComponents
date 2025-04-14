@@ -154,7 +154,7 @@ void IME::SetCompositionFont(int In_nFontSizeHeight, int In_nFontSizeWidth, BYTE
 	lpLogFont->lfStrikeOut = In_lfStrikeOut; // 取り消し線付きかどうか
 	lpLogFont->lfCharSet = In_lfCharSet; // 文字セット
 
-	m_LogFont = *lpLogFont; // フォント情報を保存
+	*m_pLogFont = *lpLogFont; // フォント情報を保存
 
 	// フォントの情報を設定
 	if (!ImmSetCompositionFontA(m_hIMC, lpLogFont))
@@ -184,16 +184,15 @@ void IME::SetCompositionWindow() const noexcept
 	}
 
 	// フォントの情報を設定
-	LPLOGFONTA lpLogFont = new LOGFONTA(); // フォント情報を取得
-	
-	ImmSetCompositionFontA(m_hIMC, &m_LogFont); // フォントの情報を設定
+	if(m_pLogFont != nullptr)
+		ImmSetCompositionFontA(m_hIMC, m_pLogFont); // フォントの情報を設定
 }
 
 IME::IME() noexcept
 	: m_bIME_Enabled(false), m_bTypeEnabled(false)
 	, m_nFontSize(0), m_hIMC(nullptr), m_hWnd(nullptr)
 	, m_strInput(""), m_strOldInput("")
-	, m_LogFont({0})
+	, m_pLogFont(nullptr)
 	, m_f2CompositionWindowPos({ 0.0f, 0.0f })
 {
 }
