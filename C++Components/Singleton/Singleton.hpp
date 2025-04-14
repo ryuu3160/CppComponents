@@ -1,10 +1,10 @@
 /*+==========================================================================
-* File : Singleton.h
-* Author : ryuu3160
-* Date : 2024/07/27
-* Note : mozc式シングルトン
-* 
-* (C) 2024 ryuu3160. All Rights Reserved.
+  File : Singleton.h
+  Author : ryuu3160
+  Date : 2024/07/27
+  Note : mozc式シングルトン
+  
+  (C) 2024 ryuu3160. All Rights Reserved.
 =============================================================================+*/
 #pragma once
 
