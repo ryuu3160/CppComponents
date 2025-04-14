@@ -26,6 +26,9 @@
     <Filter Include="FrameManager">
       <UniqueIdentifier>{958d386c-ef0c-4464-8971-23cd5b6d94a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="IME_Controller">
+      <UniqueIdentifier>{e4284ab4-ce77-45f2-9d35-3daae9d14f96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton\Singleton.hpp">
@@ -52,6 +55,9 @@
     <ClInclude Include="FrameManager\FrameManager.hpp">
       <Filter>FrameManager</Filter>
     </ClInclude>
+    <ClInclude Include="IME_Controller\IME.hpp">
+      <Filter>IME_Controller</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Singleton\SingletonController.cpp">
@@ -74,6 +80,9 @@
     </ClCompile>
     <ClCompile Include="FrameManager\FrameManager.cpp">
       <Filter>FrameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="IME_Controller\IME.cpp">
+      <Filter>IME_Controller</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
