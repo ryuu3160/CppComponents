@@ -29,6 +29,9 @@
     <Filter Include="IME_Controller">
       <UniqueIdentifier>{e4284ab4-ce77-45f2-9d35-3daae9d14f96}</UniqueIdentifier>
     </Filter>
+    <Filter Include="WindowGenerator">
+      <UniqueIdentifier>{f8e35661-289f-4148-8269-114a45a09d0e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton\Singleton.hpp">
@@ -58,6 +61,9 @@
     <ClInclude Include="IME_Controller\IME.hpp">
       <Filter>IME_Controller</Filter>
     </ClInclude>
+    <ClInclude Include="WindowGenerator\Window.hpp">
+      <Filter>WindowGenerator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Singleton\SingletonController.cpp">
@@ -83,6 +89,9 @@
     </ClCompile>
     <ClCompile Include="IME_Controller\IME.cpp">
       <Filter>IME_Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowGenerator\Window.cpp">
+      <Filter>WindowGenerator</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
