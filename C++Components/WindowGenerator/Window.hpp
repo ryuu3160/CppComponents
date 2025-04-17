@@ -3,6 +3,7 @@
 	Summary: Window作成クラス
 	Author: ryuu3160
 	Date: 2024/10/16 18:34 初回作成
+		  2025/04/17 15:11 パラメーターの設定関数の追加、取得関数の追加、コメントの追加
 
 	(C) 2024 ryuu3160. All rights reserved.
 ===================================================================+*/
@@ -14,11 +15,15 @@
 #include <Windows.h>
 #include "../Singleton/Singleton.hpp"
 
+// メンバ関数にGetClassNameがあるため、マクロを無効化
+#undef GetClassName
+
 /// <summary>
 /// ウィンドウ作成クラス
 /// </summary>
 class Window : public Singleton<Window>
 {
+	friend class Singleton<Window>;
 public:
 	/// <summary>
 	/// ウィンドウプロシージャー
@@ -62,6 +67,24 @@ public:
 	int GetHeight() const;
 
 	/// <summary>
+	/// タイトルバーの表示名を取得
+	/// </summary>
+	/// <returns>タイトルバーの表示名</returns>
+	LPCSTR GetTitleName() const;
+
+	/// <summary>
+	/// ウィンドウクラス名の取得
+	/// </summary>
+	/// <returns>ウィンドウクラス名</returns>
+	LPCSTR GetClassName() const;
+
+	/// <summary>
+	/// 親ウィンドウのハンドルを取得
+	/// </summary>
+	/// <returns>親ウィンドウのハンドル</returns>
+	HWND GetParentHwnd() const;
+
+	/// <summary>
 	/// クラスネームの設定
 	/// </summary>
 	/// <param name="[In_alpcName]">クラス名</param>
@@ -91,11 +114,27 @@ public:
 	/// <param name="[In_alpcName]">LPCTSTRへの参照</param>
 	void SetCursorIcon(HINSTANCE& In_ahIns, LPCTSTR& In_alpcName);
 	/// <summary>
-	/// スタイルの設定
+	/// ウィンドウ挙動の設定
 	/// </summary>
 	/// <param name="[In_unStyle]">UINT型</param>
 	void SetStyle(UINT In_unStyle);
 
+	/// <summary>
+	/// ウィンドウスタイルの設定
+	/// </summary>
+	/// <param name="[In_dwStyle]">ウィンドウスタイル値とコントロールスタイルの組み合わせ</param>
+	void SetWindowStyle(DWORD In_dwStyle = WS_CAPTION | WS_SYSMENU);
+
+	/// <summary>
+	/// 拡張ウィンドウスタイルの設定
+	/// </summary>
+	/// <param name="[In_dwExStyle]">拡張ウィンドウスタイル</param>
+	void SetWindowExStyle(DWORD In_dwExStyle = WS_EX_OVERLAPPEDWINDOW);
+
+	/// <summary>
+	/// メニューのハンドル又は子ウィンドウ識別子の設定
+	/// </summary>
+	/// <param name="[In_hMenu]">HMENU</param>
 	void SetMenu(HMENU In_hMenu = NULL);
 
 	/// <summary>
@@ -111,7 +150,6 @@ public:
 	void SetCreateStructParam(LPMDICREATESTRUCT In_lpParam);
 
 private:
-	friend class Singleton;
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
@@ -128,6 +166,8 @@ private:
 	int m_nHeight;			//ウィンドウの縦幅
 	RECT m_rcWindowRect;	//ウィンドウの矩形
 
+	LPCSTR m_lpcTitleName;	// タイトルバーの表示名
+
 	// アイコン
 	HINSTANCE m_hIconInstance;
 	LPCTSTR m_lpcIconName;
@@ -136,12 +176,13 @@ private:
 	HINSTANCE m_hCursorInstance;
 	LPCTSTR m_lpcCursorName;
 	
-	UINT m_unStyle;			// スタイル
+	UINT m_unStyle;			// ウィンドウ挙動
 	LPCSTR m_lpcClassName;	// ウィンドウを識別するためのクラス名
 
-	// ウィンドウの位置とスタイル
+	// ウィンドウのスタイル
 	DWORD m_dwStyle;
 	DWORD m_dwExStyle;
+	// ウィンドウの位置
 	int m_nX;
 	int m_nY;
 

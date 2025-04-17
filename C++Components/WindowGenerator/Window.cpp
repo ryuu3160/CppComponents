@@ -3,6 +3,7 @@
 	Summary: Window作成クラス
 	Author: ryuu3160
 	Date: 2024/10/16 18:34 初回作成
+		  2025/04/17 15:11 パラメーターの設定関数の追加、取得関数の追加、コメントの追加
 
 	(C) 2024 ryuu3160. All rights reserved.
 ===================================================================+*/
@@ -27,7 +28,12 @@ Window::Window()
 	m_lpcIconName = IDI_APPLICATION;
 	m_hCursorInstance = NULL;
 	m_lpcCursorName = IDC_ARROW;
-	m_lpcClassName = "Class Name";
+
+	// 既定のタイトル名
+	m_lpcTitleName = "DefaultWindowTitle";
+
+	// 既定のクラス名
+	m_lpcClassName = "MainWindow";
 
 	// 既定のウィンドウ挙動
 	m_unStyle = CS_CLASSDC | CS_DBLCLKS;
@@ -41,8 +47,9 @@ Window::Window()
 
 	// 親ウィンドウへのハンドル
 	m_hWndParent = HWND_DESKTOP;
-
+	// メニューのハンドル
 	m_hMenu = NULL;
+	// MDIクライアントウィンドウなどで使用
 	m_lpParam = NULL;
 }
 
@@ -97,21 +104,26 @@ void Window::Create(LPCTSTR In_lpcTitleName, int In_nWidth, int In_nHeight, HINS
 	}
 
 	// ------------------------------
+	//  情報の保存
+	// ------------------------------
+
+	m_nWidth = In_nWidth;							// ウィンドウの横幅を保存
+	m_nHeight = In_nHeight;							// ウィンドウの縦幅を保存
+	m_rcWindowRect = { 0, 0, m_nWidth, m_nHeight };	// ウィンドウの矩形を保存
+	m_lpcTitleName = In_lpcTitleName;				// タイトルバーの表示名を保存
+
+	// ------------------------------
 	//	ウィンドウの作成・表示
 	// ------------------------------
 
-	//幅と高さの保存
-	m_nWidth = In_nWidth;
-	m_nHeight = In_nHeight;
-	m_rcWindowRect = { 0, 0, m_nWidth, m_nHeight };
-
-	AdjustWindowRectEx(&m_rcWindowRect, m_dwStyle, false, m_dwExStyle); // ウィンドウのサイズを調整
+	// ウィンドウのサイズを調整
+	AdjustWindowRectEx(&m_rcWindowRect, m_dwStyle, false, m_dwExStyle);
 
 	// ウィンドウの作成
 	m_hWnd = CreateWindowExA(
 		m_dwExStyle,								// 拡張ウィンドウスタイル
 		m_wcex.lpszClassName,						// ウィンドウクラス名
-		In_lpcTitleName,							// ウィンドウのタイトル
+		m_lpcTitleName,								// ウィンドウのタイトル
 		m_dwStyle,									// ウィンドウスタイル
 		m_nX, m_nY,									// ウィンドウの表示位置
 		m_rcWindowRect.right - m_rcWindowRect.left, // ウィンドウの幅
@@ -163,6 +175,21 @@ int Window::GetHeight() const
 	return m_nHeight;
 }
 
+LPCSTR Window::GetTitleName() const
+{
+	return m_lpcTitleName;
+}
+
+LPCSTR Window::GetClassName() const
+{
+	return m_lpcClassName;
+}
+
+HWND Window::GetParentHwnd() const
+{
+	return m_hWndParent;
+}
+
 void Window::SetClassName(LPCSTR& In_alpcName)
 {
 	m_lpcClassName = In_alpcName;
@@ -193,6 +220,16 @@ void Window::SetCursorIcon(HINSTANCE& In_ahIns, LPCTSTR& In_alpcName)
 void Window::SetStyle(UINT In_unStyle)
 {
 	m_unStyle = In_unStyle;
+}
+
+void Window::SetWindowStyle(DWORD In_dwStyle)
+{
+	m_dwStyle = In_dwStyle;
+}
+
+void Window::SetWindowExStyle(DWORD In_dwExStyle)
+{
+	m_dwExStyle = In_dwExStyle;
 }
 
 void Window::SetMenu(HMENU In_hMenu)
