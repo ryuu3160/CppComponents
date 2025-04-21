@@ -32,6 +32,9 @@
     <Filter Include="WindowGenerator">
       <UniqueIdentifier>{f8e35661-289f-4148-8269-114a45a09d0e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DirectX11">
+      <UniqueIdentifier>{9aa1f9df-504f-49ae-b4b3-d969d227f6b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton\Singleton.hpp">
@@ -64,6 +67,9 @@
     <ClInclude Include="WindowGenerator\Window.hpp">
       <Filter>WindowGenerator</Filter>
     </ClInclude>
+    <ClInclude Include="DirectX11\DX11_Initialize.hpp">
+      <Filter>DirectX11</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Singleton\SingletonController.cpp">
@@ -92,6 +98,9 @@
     </ClCompile>
     <ClCompile Include="WindowGenerator\Window.cpp">
       <Filter>WindowGenerator</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX11\DX11_Initialize.cpp">
+      <Filter>DirectX11</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
