@@ -35,6 +35,9 @@
     <Filter Include="DirectX11">
       <UniqueIdentifier>{9aa1f9df-504f-49ae-b4b3-d969d227f6b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DirectX11\Texture">
+      <UniqueIdentifier>{62f907fd-41e2-479a-86d4-6d11bded8cfd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton\Singleton.hpp">
@@ -70,6 +73,15 @@
     <ClInclude Include="DirectX11\DX11_Initialize.hpp">
       <Filter>DirectX11</Filter>
     </ClInclude>
+    <ClInclude Include="DirectX11\Texture\DepthStencil.hpp">
+      <Filter>DirectX11\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX11\Texture\RenderTarget.hpp">
+      <Filter>DirectX11\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX11\Texture\Texture.hpp">
+      <Filter>DirectX11\Texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Singleton\SingletonController.cpp">
@@ -101,6 +113,15 @@
     </ClCompile>
     <ClCompile Include="DirectX11\DX11_Initialize.cpp">
       <Filter>DirectX11</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX11\Texture\DepthStencil.cpp">
+      <Filter>DirectX11\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX11\Texture\RenderTarget.cpp">
+      <Filter>DirectX11\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX11\Texture\Texture.cpp">
+      <Filter>DirectX11\Texture</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

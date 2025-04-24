@@ -21,6 +21,11 @@
 #include "../WindowGenerator/Window.hpp"
 #include "../Singleton/Singleton.hpp"
 
+// COM
+#include <wrl/client.h>
+#include <initguid.h>
+using Microsoft::WRL::ComPtr;
+
 // ==============================
 //	‘O•ûéŒ¾
 // ==============================

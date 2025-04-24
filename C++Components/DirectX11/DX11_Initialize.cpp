@@ -10,7 +10,6 @@
 //	include
 // ==============================
 #include "DX11_Initialize.hpp"
-#include "Texture/Texture.hpp"
 #include "Texture/RenderTarget.hpp"
 #include "Texture/DepthStencil.hpp"
 
@@ -143,9 +142,6 @@ HRESULT DX11_Initialize::Init()
 		if (FAILED(m_hr)) return m_hr;
 	}
 	SetCullingMode(D3D11_CULL_BACK);
-
-	//深度テスト
-
 
 	//ブレンドステートの設定
 	// https://pgming-ctrl.com/directx11/blend/
@@ -293,7 +289,7 @@ void DX11_Initialize::SetWindowColor(const std::vector<float>&In_vecRgba)
 {
 	if (In_vecRgba.size() != 4)
 	{
-		MsgBox::Error("DirectXInitR error", "ColorElement count error");
+		throw std::runtime_error("DX11 Init Error : ColorElement count error");
 	}
 
 	m_WindowColor[0] = In_vecRgba[0];
