@@ -131,6 +131,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Component\Component.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Component\ComponentManager.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="CRC31_HashGenerator\HashGenerator.hpp" />
     <ClInclude Include="DirectX11\DX11_Initialize.hpp" />
     <ClInclude Include="DirectX11\Texture\DepthStencil.hpp" />
@@ -150,6 +158,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Component\Component.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="CRC31_HashGenerator\HashGenerator.cpp" />
     <ClCompile Include="DirectX11\DX11_Initialize.cpp" />
     <ClCompile Include="DirectX11\Texture\DepthStencil.cpp" />
