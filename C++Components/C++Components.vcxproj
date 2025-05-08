@@ -152,6 +152,10 @@
     <ClInclude Include="Singleton\Singleton.hpp" />
     <ClInclude Include="Singleton\SingletonController.hpp" />
     <ClInclude Include="WindowGenerator\Window.hpp" />
+    <ClInclude Include="_Manual_\RandomModuleManual.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="_Manual_\SingletonManual.hpp">
       <SubType>
       </SubType>

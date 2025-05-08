@@ -9,12 +9,14 @@
 //	include
 // ==============================
 #include "SingletonManual.hpp"
+#include "RandomModuleManual.hpp"
 #include <iostream>
 
 int main()
 {
 	SingletonTest();
 
+	RandomModuleTest();
 
 	static_cast<void>(getchar());
 	return 0;
