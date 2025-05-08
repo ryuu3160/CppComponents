@@ -38,6 +38,9 @@
     <Filter Include="DirectX11\Texture">
       <UniqueIdentifier>{62f907fd-41e2-479a-86d4-6d11bded8cfd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Component">
+      <UniqueIdentifier>{bd9dbb92-a825-4413-a443-ea9559b71a8e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton\Singleton.hpp">
@@ -82,6 +85,12 @@
     <ClInclude Include="DirectX11\Texture\Texture.hpp">
       <Filter>DirectX11\Texture</Filter>
     </ClInclude>
+    <ClInclude Include="Component\ComponentManager.hpp">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\Component.hpp">
+      <Filter>Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Singleton\SingletonController.cpp">
@@ -122,6 +131,9 @@
     </ClCompile>
     <ClCompile Include="DirectX11\Texture\Texture.cpp">
       <Filter>DirectX11\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\Component.cpp">
+      <Filter>Component</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
