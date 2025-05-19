@@ -13,6 +13,7 @@
 #include <d3d11.h>
 #include <d2d1.h>
 #include <dwrite.h>
+#include <DirectXMath.h>
 #pragma comment(lib, "d2d1.lib")
 #pragma comment(lib, "dwrite.lib")
 #pragma comment(lib, "d3d11.lib")
@@ -25,6 +26,11 @@
 #include <wrl/client.h>
 #include <initguid.h>
 using Microsoft::WRL::ComPtr;
+
+// ==============================
+//  ƒ}ƒNƒ
+// ==============================
+#define SAFE_RELEASE(ptr) { if(ptr){ptr->Release(); ptr = nullptr;}}
 
 // ==============================
 //	‘O•ûéŒ¾

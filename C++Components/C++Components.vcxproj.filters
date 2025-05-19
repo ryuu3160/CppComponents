@@ -76,12 +76,6 @@
     <ClInclude Include="DirectX11\DX11_Initialize.hpp">
       <Filter>DirectX11</Filter>
     </ClInclude>
-    <ClInclude Include="DirectX11\Texture\DepthStencil.hpp">
-      <Filter>DirectX11\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectX11\Texture\RenderTarget.hpp">
-      <Filter>DirectX11\Texture</Filter>
-    </ClInclude>
     <ClInclude Include="DirectX11\Texture\Texture.hpp">
       <Filter>DirectX11\Texture</Filter>
     </ClInclude>
@@ -125,12 +119,6 @@
     </ClCompile>
     <ClCompile Include="DirectX11\DX11_Initialize.cpp">
       <Filter>DirectX11</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectX11\Texture\DepthStencil.cpp">
-      <Filter>DirectX11\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectX11\Texture\RenderTarget.cpp">
-      <Filter>DirectX11\Texture</Filter>
     </ClCompile>
     <ClCompile Include="DirectX11\Texture\Texture.cpp">
       <Filter>DirectX11\Texture</Filter>

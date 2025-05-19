@@ -141,8 +141,6 @@
     </ClInclude>
     <ClInclude Include="CRC31_HashGenerator\HashGenerator.hpp" />
     <ClInclude Include="DirectX11\DX11_Initialize.hpp" />
-    <ClInclude Include="DirectX11\Texture\DepthStencil.hpp" />
-    <ClInclude Include="DirectX11\Texture\RenderTarget.hpp" />
     <ClInclude Include="DirectX11\Texture\Texture.hpp" />
     <ClInclude Include="Easing\Easing.hpp" />
     <ClInclude Include="FrameManager\FrameManager.hpp" />
@@ -168,8 +166,6 @@
     </ClCompile>
     <ClCompile Include="CRC31_HashGenerator\HashGenerator.cpp" />
     <ClCompile Include="DirectX11\DX11_Initialize.cpp" />
-    <ClCompile Include="DirectX11\Texture\DepthStencil.cpp" />
-    <ClCompile Include="DirectX11\Texture\RenderTarget.cpp" />
     <ClCompile Include="DirectX11\Texture\Texture.cpp" />
     <ClCompile Include="Easing\Easing.cpp" />
     <ClCompile Include="FrameManager\FrameManager.cpp" />
