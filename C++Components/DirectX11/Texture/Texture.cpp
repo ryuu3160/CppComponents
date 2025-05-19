@@ -1,3 +1,9 @@
+/*+===================================================================
+	File: Texture.hpp
+	Summary: Texture関連クラス
+	Author: ryuu3160
+	Date: 10/19/2024 Sat AM 01:20:06 初回作成
+===================================================================+*/
 #include "Texture.hpp"
 #include "../DirectXTex/TextureLoad.h"
 
@@ -37,7 +43,7 @@ HRESULT Texture::Create(const char *fileName)
 	}
 
 	// シェーダリソース生成
-	hr = CreateShaderResourceView(GetDevice(), image.GetImages(), image.GetImageCount(), mdata, &m_pSRV);
+	hr = CreateShaderResourceView(DX11_Initialize::GetInstance().GetDevice(), image.GetImages(), image.GetImageCount(), mdata, &m_pSRV);
 	if (SUCCEEDED(hr))
 	{
 		m_width = (UINT)mdata.width;

@@ -41,6 +41,9 @@
     <Filter Include="Component">
       <UniqueIdentifier>{bd9dbb92-a825-4413-a443-ea9559b71a8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DirectX11\System">
+      <UniqueIdentifier>{1f34fda5-57e4-4102-a93d-dc05ec050150}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton\Singleton.hpp">
@@ -88,6 +91,18 @@
     <ClInclude Include="_Manual_\RandomModuleManual.hpp">
       <Filter>_Manual_</Filter>
     </ClInclude>
+    <ClInclude Include="DirectX11\Texture\Shader.hpp">
+      <Filter>DirectX11\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX11\Texture\UnorderedAccessView.hpp">
+      <Filter>DirectX11\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX11\Texture\MeshBuffer.hpp">
+      <Filter>DirectX11\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX11\System\Sprite.hpp">
+      <Filter>DirectX11\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Singleton\SingletonController.cpp">
@@ -125,6 +140,18 @@
     </ClCompile>
     <ClCompile Include="Component\Component.cpp">
       <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX11\Texture\Shader.cpp">
+      <Filter>DirectX11\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX11\Texture\UnorderedAccessView.cpp">
+      <Filter>DirectX11\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX11\Texture\MeshBuffer.cpp">
+      <Filter>DirectX11\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX11\System\Sprite.cpp">
+      <Filter>DirectX11\System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
