@@ -1,20 +1,14 @@
 /*+===================================================================
 	File: Sprite.cpp
-	Summary: （このファイルで何をするか記載する）
-	Author: AT12X192 01 青木雄一郎
+	Summary: wasssk様のものを参考にして作成
+	Author: ryuu3160
 	Date: 2025/05/19 Mon PM 05:28:01 初回作成
-	（これ以降下に更新日時と更新内容を書く）
 ===================================================================+*/
 
 // ==============================
 //	include
 // ==============================
 #include "Sprite.hpp"
-
-Sprite::Data Sprite::m_data;
-std::shared_ptr<VertexShader> Sprite::m_defVS;
-std::shared_ptr<PixelShader> Sprite::m_defPS;
-std::shared_ptr<Texture> Sprite::m_whiteTex;
 
 void Sprite::Init()
 {
@@ -173,4 +167,12 @@ void Sprite::SetPixelShader(Shader *ps)
 		m_data.ps = ps;
 	else
 		m_data.ps = m_defPS.get();
+}
+
+Sprite::Sprite()
+{
+}
+
+Sprite::~Sprite()
+{
 }

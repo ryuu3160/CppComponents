@@ -1,9 +1,8 @@
 /*+===================================================================
 	File: Sprite.hpp
-	Summary: （このファイルで何をするか記載する）
-	Author: AT12X192 01 青木雄一郎
+	Summary: wasssk様のものを参考にして作成
+	Author: ryuu3160
 	Date: 2025/05/19 Mon PM 05:27:48 初回作成
-	（これ以降下に更新日時と更新内容を書く）
 ===================================================================+*/
 #pragma once
 
@@ -15,28 +14,33 @@
 #include "../Texture/Shader.hpp"
 #include "../Texture/Texture.hpp"
 
-class Sprite
+class Sprite : Singleton<Sprite>
 {
+	friend class Singleton<Sprite>;
 public:
-	static void Init();
-	static void Uninit();
-	static void Draw();
+	void Init();
+	void Uninit();
+	void Draw();
 
-	static void SetOffset(DirectX::XMFLOAT2 offset);
-	static void SetSize(DirectX::XMFLOAT2 size);
-	static void SetUVPos(DirectX::XMFLOAT2 pos);
-	static void SetUVScale(DirectX::XMFLOAT2 scale);
-	static void SetColor(DirectX::XMFLOAT4 color);
-	static void SetTexture(Texture *tex);
+	void SetOffset(DirectX::XMFLOAT2 offset);
+	void SetSize(DirectX::XMFLOAT2 size);
+	void SetUVPos(DirectX::XMFLOAT2 pos);
+	void SetUVScale(DirectX::XMFLOAT2 scale);
+	void SetColor(DirectX::XMFLOAT4 color);
+	void SetTexture(Texture *tex);
 
-	static void SetWorld(DirectX::XMFLOAT4X4 world);
-	static void SetView(DirectX::XMFLOAT4X4 view);
-	static void SetProjection(DirectX::XMFLOAT4X4 proj);
+	void SetWorld(DirectX::XMFLOAT4X4 world);
+	void SetView(DirectX::XMFLOAT4X4 view);
+	void SetProjection(DirectX::XMFLOAT4X4 proj);
 
-	static void SetVertexShader(Shader *vs);
-	static void SetPixelShader(Shader *ps);
+	void SetVertexShader(Shader *vs);
+	void SetPixelShader(Shader *ps);
 
 private:
+
+	Sprite();
+	~Sprite();
+
 	struct Data
 	{
 		std::shared_ptr<MeshBuffer> mesh;
@@ -46,8 +50,8 @@ private:
 		Shader *vs;
 		Shader *ps;
 	};
-	static Data m_data;
-	static std::shared_ptr<VertexShader> m_defVS;
-	static std::shared_ptr<PixelShader> m_defPS;
-	static std::shared_ptr<Texture> m_whiteTex;
+	Data m_data;
+	std::shared_ptr<VertexShader> m_defVS;
+	std::shared_ptr<PixelShader> m_defPS;
+	std::shared_ptr<Texture> m_whiteTex;
 };
