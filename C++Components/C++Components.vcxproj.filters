@@ -44,6 +44,12 @@
     <Filter Include="DirectX11\System">
       <UniqueIdentifier>{1f34fda5-57e4-4102-a93d-dc05ec050150}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DirectX11\Assets">
+      <UniqueIdentifier>{6091a21f-f6e7-40d8-84d2-bdebe51d683a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectX11\Assets\Shader">
+      <UniqueIdentifier>{28de7c58-8a7a-4811-ad75-ec13e7e42efd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton\Singleton.hpp">
@@ -153,5 +159,13 @@
     <ClCompile Include="DirectX11\System\Sprite.cpp">
       <Filter>DirectX11\System</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="DirectX11\Assets\Shader\VS_Sprite.hlsl">
+      <Filter>DirectX11\Assets\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="DirectX11\Assets\Shader\PS_Sprite.hlsl">
+      <Filter>DirectX11\Assets\Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
