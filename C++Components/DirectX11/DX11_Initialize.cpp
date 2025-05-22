@@ -9,8 +9,7 @@
 //	include
 // ==============================
 #include "DX11_Initialize.hpp"
-#include "Texture/RenderTarget.hpp"
-#include "Texture/DepthStencil.hpp"
+#include "Texture/Texture.hpp"
 
 DX11_Initialize::DX11_Initialize() : m_WindowColor{0.8f, 0.9f, 1.0f, 1.0f }, m_BlendFactor{0.0f, 0.0f, 0.0f, 0.0f}
 								, m_pRT(nullptr), m_pDS(nullptr)

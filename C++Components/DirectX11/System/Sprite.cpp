@@ -89,7 +89,7 @@ float4 main(PS_IN pin) : SV_TARGET {
 
 	// シェーダー
 	m_defVS = std::make_shared<VertexShader>();
-	m_defVS->Compile(VS);
+	m_defVS->Load("Assets/Shader/SpriteVS.cso");
 	m_data.vs = m_defVS.get();
 	m_defPS = std::make_shared <PixelShader>();
 	m_defPS->Compile(PS);
