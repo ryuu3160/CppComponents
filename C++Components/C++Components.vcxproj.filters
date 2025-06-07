@@ -109,6 +109,9 @@
     <ClInclude Include="DirectX11\System\Sprite.hpp">
       <Filter>DirectX11\System</Filter>
     </ClInclude>
+    <ClInclude Include="_Manual_\ObserverManual.hpp">
+      <Filter>_Manual_</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Singleton\SingletonController.cpp">
