@@ -187,7 +187,13 @@ private:
 
 
 
-//Random.Choiceの定義
+/// <summary>
+/// 与えた複数の文字列からランダムで1つを返す
+/// </summary>
+/// <param name="[...args]">複数の引数を指定可能、文字列を与えられることを想定している</param>
+/// <returns>std::string型</returns>
+/// <memo>シード値は必ず設定されているので、この関数が失敗することは無い</memo>
+/// <memo>引数に文字列以外を渡すとエラーになる</memo>
 template<typename ...A>
 std::string Random::Choice(A... args) const
 {
@@ -236,7 +242,11 @@ std::string Random::Choice(A... args) const
 	return strReturn;
 }
 
-//Random.Choiceの定義(vector)
+/// <summary>
+/// 複数のデータが格納されたvectorからランダムで1つを返す
+/// </summary>
+/// <param name="[aray]">vectorのインスタンスへの参照</param>
+/// <returns>vectorの型と同じ型</returns>
 template<typename T>
 T Random::Choice(const std::vector<T>& aray) const
 {
@@ -265,7 +275,11 @@ T Random::Choice(const std::vector<T>& aray) const
 	return put;
 }
 
-//Random.Choiceの定義(list)
+/// <summary>
+/// 複数のデータが格納されたlistからランダムで1つを返す
+/// </summary>
+/// <param name="[aray]">listのインスタンスへの参照</param>
+/// <returns>listの型と同じ型</returns>
 template<typename T>
 T Random::Choice(const std::list<T>& aray) const
 {
@@ -299,7 +313,14 @@ T Random::Choice(const std::list<T>& aray) const
 	return put;
 }
 
-//Random.Sampleの定義(vector)
+/// <summary>
+/// <para>引数で与えたvectorのデータからランダムに複数の要素を選択してvectorとして返す</para>
+/// <para>要素の重複はない</para>
+/// </summary>
+/// <param name="[aray]">vectorのインスタンスへの参照</param>
+/// <param name="[num]">取得したい要素の個数</param>
+/// <returns>vectorクラス</returns>
+/// <memo>取得する要素数は元のvectorの要素数より大きくすることは出来ない</memo>
 template<typename T>
 std::vector<T> Random::Sample(const std::vector<T> &aray, int num) const
 {
@@ -356,7 +377,14 @@ std::vector<T> Random::Sample(const std::vector<T> &aray, int num) const
 	return sample;
 }
 
-//Random.Sampleの定義(list)
+/// <summary>
+/// <para>引数で与えたlistのデータからランダムに複数の要素を選択してlistとして返す</para>
+/// <para>要素の重複はない</para>
+/// </summary>
+/// <param name="[aray]">listのインスタンスへの参照</param>
+/// <param name="[num]">取得したい要素の個数</param>
+/// <returns>listクラス</returns>
+/// <memo>取得する要素数は元のvectorの要素数より大きくすることは出来ない</memo>
 template<typename T>
 std::list<T> Random::Sample(const std::list<T>& aray, int num) const
 {
@@ -418,7 +446,14 @@ std::list<T> Random::Sample(const std::list<T>& aray, int num) const
 	return sample;
 }
 
-//Random.Choicesの定義(vector)
+/// <summary>
+/// <para>引数で与えたvectorのデータからランダムに複数の要素を選択してvectorとして返す</para>
+/// <para>要素の重複あり</para>
+/// </summary>
+/// <param name="[aray]">vectorのインスタンスへの参照</param>
+/// <param name="[k]">取得する要素数</param>
+/// <returns>vectorクラス</returns>
+/// <memo>取得する要素数は元のvectorの要素数より大きくすることが出来る</memo>
 template<typename T>
 std::vector<T> Random::Choices(const std::vector<T>& aray, int k) const
 {
@@ -444,7 +479,14 @@ std::vector<T> Random::Choices(const std::vector<T>& aray, int k) const
 	return choices;
 }
 
-//Random.Choicesの定義(list)
+/// <summary>
+/// <para>引数で与えたlistのデータからランダムに複数の要素を選択してlistとして返す</para>
+/// <para>要素の重複あり</para>
+/// </summary>
+/// <param name="[aray]">listのインスタンスへの参照</param>
+/// <param name="[k]">取得する要素数</param>
+/// <returns>listクラス</returns>
+/// <memo>取得する要素数は元のvectorの要素数より大きくすることが出来る</memo>
 template<typename T>
 std::list<T> Random::Choices(const std::list<T>& aray, int k) const
 {
