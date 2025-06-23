@@ -19,8 +19,8 @@ Window::Window()
 	// 初期化
 	ZeroMemory(&m_wcex, sizeof(m_wcex));
 	m_hWnd = NULL;
-	m_nWidth = 0;
-	m_nHeight = 0;
+	m_unWidth = 0;
+	m_unHeight = 0;
 	m_rcWindowRect = { 0, 0, 0, 0 };
 
 	// 既定のアイコン
@@ -59,7 +59,7 @@ Window::~Window()
 	UnregisterClass(m_lpcClassName, m_wcex.hInstance);
 }
 
-LRESULT CALLBACK Window::m_WndProc(HWND In_hWnd, UINT In_unMessage, WPARAM In_wParam, LPARAM In_lParam)
+LRESULT CALLBACK Window::m_WndProc(_In_ HWND In_hWnd, _In_ UINT In_unMessage, _In_ WPARAM In_wParam, _In_ LPARAM In_lParam)
 {
 	switch (In_unMessage)
 	{
@@ -79,7 +79,7 @@ LRESULT CALLBACK Window::m_WndProc(HWND In_hWnd, UINT In_unMessage, WPARAM In_wP
 	return DefWindowProc(In_hWnd, In_unMessage, In_wParam, In_lParam);
 }
 
-void Window::Create(LPCTSTR In_lpcTitleName, int In_nWidth, int In_nHeight, HINSTANCE In_hInstance, int In_nCmdShow)
+void Window::Create(_In_ LPCTSTR In_lpcTitleName, _In_ UINT In_unWidth, _In_ UINT In_unHeight, _In_ HINSTANCE In_hInstance, _In_ int In_nCmdShow)
 {
 	// ------------------------------
 	//	ウィンドウクラス情報の作成
@@ -107,9 +107,9 @@ void Window::Create(LPCTSTR In_lpcTitleName, int In_nWidth, int In_nHeight, HINS
 	//  情報の保存
 	// ------------------------------
 
-	m_nWidth = In_nWidth;							// ウィンドウの横幅を保存
-	m_nHeight = In_nHeight;							// ウィンドウの縦幅を保存
-	m_rcWindowRect = { 0, 0, m_nWidth, m_nHeight };	// ウィンドウの矩形を保存
+	m_unWidth = In_unWidth;							// ウィンドウの横幅を保存
+	m_unHeight = In_unHeight;						// ウィンドウの縦幅を保存
+	m_rcWindowRect = { 0, 0, static_cast<long>(m_unWidth), static_cast<long>(m_unHeight) };	// ウィンドウの矩形を保存
 	m_lpcTitleName = In_lpcTitleName;				// タイトルバーの表示名を保存
 
 	// ------------------------------
@@ -160,19 +160,19 @@ void Window::SetWindowPosCenter()
 	SetWindowPos(m_hWnd, NULL, m_nX, m_nY, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 }
 
-HWND& Window::GetHwnd()
+inline HWND& Window::GetHwnd() noexcept
 {
 	return m_hWnd;
 }
 
-int Window::GetWidth() const
+inline UINT Window::GetWidth() const noexcept
 {
-	return m_nWidth;
+	return m_unWidth;
 }
 
-int Window::GetHeight() const
+inline UINT Window::GetHeight() const noexcept
 {
-	return m_nHeight;
+	return m_unHeight;
 }
 
 LPCSTR Window::GetTitleName() const
@@ -185,64 +185,64 @@ LPCSTR Window::GetClassName() const
 	return m_lpcClassName;
 }
 
-HWND Window::GetParentHwnd() const
+HWND &Window::GetParentHwnd() noexcept
 {
 	return m_hWndParent;
 }
 
-void Window::SetClassName(LPCSTR& In_alpcName)
+void Window::SetClassName(_In_ const LPCSTR& In_alpcName)
 {
 	m_lpcClassName = In_alpcName;
 }
 
-void Window::SetParent(HWND In_hWndParent)
+void Window::SetParent(_In_ HWND In_hWndParent)
 {
 	m_hWndParent = In_hWndParent;
 }
 
-void Window::SetColor(int In_nColor)
+void Window::SetColor(_In_ const int &In_nColor)
 {
 	m_Color = In_nColor;
 }
 
-void Window::SetIcon(HINSTANCE& In_ahIns, LPCTSTR& In_alpcName)
+void Window::SetIcon(_In_ HINSTANCE& In_ahIns, _In_ LPCTSTR& In_alpcName)
 {
 	m_hIconInstance = In_ahIns;
 	m_lpcIconName = In_alpcName;
 }
 
-void Window::SetCursorIcon(HINSTANCE& In_ahIns, LPCTSTR& In_alpcName)
+void Window::SetCursorIcon(_In_ HINSTANCE& In_ahIns, _In_ LPCTSTR& In_alpcName)
 {
 	m_hCursorInstance = In_ahIns;
 	m_lpcCursorName = In_alpcName;
 }
 
-void Window::SetStyle(UINT In_unStyle)
+void Window::SetStyle(_In_ UINT In_unStyle)
 {
 	m_unStyle = In_unStyle;
 }
 
-void Window::SetWindowStyle(DWORD In_dwStyle)
+void Window::SetWindowStyle(_In_ DWORD In_dwStyle)
 {
 	m_dwStyle = In_dwStyle;
 }
 
-void Window::SetWindowExStyle(DWORD In_dwExStyle)
+void Window::SetWindowExStyle(_In_ DWORD In_dwExStyle)
 {
 	m_dwExStyle = In_dwExStyle;
 }
 
-void Window::SetMenu(HMENU In_hMenu)
+void Window::SetMenu(_In_ HMENU In_hMenu)
 {
 	m_hMenu = In_hMenu;
 }
 
-void Window::SetCreateStructParam(LPCLIENTCREATESTRUCT In_lpParam)
+void Window::SetCreateStructParam(_In_ LPCLIENTCREATESTRUCT In_lpParam)
 {
 	m_lpParam = In_lpParam;
 }
 
-void Window::SetCreateStructParam(LPMDICREATESTRUCT In_lpParam)
+void Window::SetCreateStructParam(_In_ LPMDICREATESTRUCT In_lpParam)
 {
 	m_lpParam = In_lpParam;
 }

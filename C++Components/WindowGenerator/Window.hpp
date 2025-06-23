@@ -33,7 +33,7 @@ public:
 	/// <param name="[In_wParam]">追加のメッセージ</param>
 	/// <param name="[In_lParam]">追加のメッセージ</param>
 	/// <returns>結果</returns>
-	static LRESULT CALLBACK m_WndProc(HWND In_hWnd, UINT In_unMessage, WPARAM In_wParam, LPARAM In_lParam);
+	static LRESULT CALLBACK m_WndProc(_In_ HWND In_hWnd, _In_ UINT In_unMessage, _In_ WPARAM In_wParam, _In_ LPARAM In_lParam);
 
 	/// <summary>
 	/// ウィンドウの作成
@@ -43,7 +43,7 @@ public:
 	/// <param name="[In_nHeight]">ウィンドウの縦幅</param>
 	/// <param name="[In_hInstance]">WinMainの引数にあるインスタンスハンドル</param>
 	/// <param name="[In_nCmdShow]">ウィンドウの表示方法</param>
-	void Create(LPCTSTR In_lpcTitleName, int In_nWidth, int In_nHeight, HINSTANCE In_hInstance, int In_nCmdShow = SW_SHOWDEFAULT);
+	void Create(_In_ LPCTSTR In_lpcTitleName, _In_ UINT In_unWidth, UINT In_unHeight, _In_ HINSTANCE In_hInstance, _In_ int In_nCmdShow = SW_SHOWDEFAULT);
 
 	/// <summary>
 	/// ウィンドウを画面中央に移動
@@ -54,100 +54,100 @@ public:
 	/// ウィンドウハンドルの取得
 	/// </summary>
 	/// <returns>ウィンドウハンドル</returns>
-	HWND& GetHwnd();
+	inline HWND& GetHwnd() noexcept;
 	/// <summary>
 	/// ウィンドウの横幅を取得
 	/// </summary>
-	/// <returns>横幅(int型)</returns>
-	int GetWidth() const;
+	/// <returns>横幅(UINT型)</returns>
+	inline UINT GetWidth() const noexcept;
 	/// <summary>
 	/// ウィンドウの縦幅を取得
 	/// </summary>
-	/// <returns>縦幅(int型)</returns>
-	int GetHeight() const;
+	/// <returns>縦幅(UINT型)</returns>
+	inline UINT GetHeight() const noexcept;
 
 	/// <summary>
 	/// タイトルバーの表示名を取得
 	/// </summary>
 	/// <returns>タイトルバーの表示名</returns>
-	LPCSTR GetTitleName() const;
+	inline LPCSTR GetTitleName() const noexcept;
 
 	/// <summary>
 	/// ウィンドウクラス名の取得
 	/// </summary>
 	/// <returns>ウィンドウクラス名</returns>
-	LPCSTR GetClassName() const;
+	inline LPCSTR GetClassName() const noexcept;
 
 	/// <summary>
 	/// 親ウィンドウのハンドルを取得
 	/// </summary>
 	/// <returns>親ウィンドウのハンドル</returns>
-	HWND GetParentHwnd() const;
+	inline HWND &GetParentHwnd() noexcept;
 
 	/// <summary>
 	/// クラスネームの設定
 	/// </summary>
 	/// <param name="[In_alpcName]">クラス名</param>
-	void SetClassName(LPCSTR& In_alpcName);
+	void SetClassName(_In_ const LPCSTR& In_alpcName);
 
 	/// <summary>
 	/// 親ウィンドウの設定
 	/// </summary>
 	/// <param name="[In_hWndParent]">親ウィンドウへのハンドル</param>
-	void SetParent(HWND In_hWndParent = HWND_DESKTOP);
+	void SetParent(_In_ HWND In_hWndParent = HWND_DESKTOP);
 
 	/// <summary>
 	/// ウィンドウカラーの設定
 	/// </summary>
 	/// <param name="[In_nColor]">色パラメータ</param>
-	void SetColor(int In_nColor = WHITE_BRUSH);
+	void SetColor(_In_ const int &In_nColor = WHITE_BRUSH);
 	/// <summary>
 	/// アイコンの設定
 	/// </summary>
 	/// <param name="[In_ahIns]">HINSTANCEへの参照</param>
 	/// <param name="[In_alpcName]">LPCTSTRへの参照</param>
-	void SetIcon(HINSTANCE& In_ahIns, LPCTSTR& In_alpcName);
+	void SetIcon(_In_ HINSTANCE& In_ahIns, _In_ LPCTSTR& In_alpcName);
 	/// <summary>
 	/// カーソルアイコンの設定
 	/// </summary>
 	/// <param name="[In_ahIns]">HINSTANCEへの参照</param>
 	/// <param name="[In_alpcName]">LPCTSTRへの参照</param>
-	void SetCursorIcon(HINSTANCE& In_ahIns, LPCTSTR& In_alpcName);
+	void SetCursorIcon(_In_ HINSTANCE& In_ahIns, _In_ LPCTSTR& In_alpcName);
 	/// <summary>
 	/// ウィンドウ挙動の設定
 	/// </summary>
 	/// <param name="[In_unStyle]">UINT型</param>
-	void SetStyle(UINT In_unStyle);
+	void SetStyle(_In_ UINT In_unStyle);
 
 	/// <summary>
 	/// ウィンドウスタイルの設定
 	/// </summary>
 	/// <param name="[In_dwStyle]">ウィンドウスタイル値とコントロールスタイルの組み合わせ</param>
-	void SetWindowStyle(DWORD In_dwStyle = WS_CAPTION | WS_SYSMENU);
+	void SetWindowStyle(_In_ DWORD In_dwStyle = WS_CAPTION | WS_SYSMENU);
 
 	/// <summary>
 	/// 拡張ウィンドウスタイルの設定
 	/// </summary>
 	/// <param name="[In_dwExStyle]">拡張ウィンドウスタイル</param>
-	void SetWindowExStyle(DWORD In_dwExStyle = WS_EX_OVERLAPPEDWINDOW);
+	void SetWindowExStyle(_In_ DWORD In_dwExStyle = WS_EX_OVERLAPPEDWINDOW);
 
 	/// <summary>
 	/// メニューのハンドル又は子ウィンドウ識別子の設定
 	/// </summary>
 	/// <param name="[In_hMenu]">HMENU</param>
-	void SetMenu(HMENU In_hMenu = NULL);
+	void SetMenu(_In_ HMENU In_hMenu = NULL);
 
 	/// <summary>
 	/// MDIクライアントウィンドウを作成するときに使用
 	/// </summary>
 	/// <param name="[lpParam]">CLIENTCREATESTRUCTへのポインタ</param>
-	void SetCreateStructParam(LPCLIENTCREATESTRUCT In_lpParam);
+	void SetCreateStructParam(_In_ LPCLIENTCREATESTRUCT In_lpParam);
 
 	/// <summary>
 	/// MDI子ウィンドウを作成するときに使用
 	/// </summary>
 	/// <param name="[lpParam]">MDICREATESTRUCTへのポインタ</param>
-	void SetCreateStructParam(LPMDICREATESTRUCT In_lpParam);
+	void SetCreateStructParam(_In_ LPMDICREATESTRUCT In_lpParam);
 
 private:
 	/// <summary>
@@ -162,8 +162,8 @@ private:
 private:
 	WNDCLASSEX m_wcex;		//ウィンドウクラス情報
 	HWND m_hWnd;			//ウィンドウハンドル
-	int m_nWidth;			//ウィンドウの横幅
-	int m_nHeight;			//ウィンドウの縦幅
+	UINT m_unWidth;			//ウィンドウの横幅
+	UINT m_unHeight;			//ウィンドウの縦幅
 	RECT m_rcWindowRect;	//ウィンドウの矩形
 
 	LPCSTR m_lpcTitleName;	// タイトルバーの表示名
