@@ -10,6 +10,7 @@
 // ==============================
 #include "SingletonManual.hpp"
 #include "RandomModuleManual.hpp"
+#include "ObserverManual.hpp"
 #include <iostream>
 
 int main()
@@ -17,6 +18,8 @@ int main()
 	SingletonTest();
 
 	RandomModuleTest();
+
+	ObserverTest();
 
 	static_cast<void>(getchar());
 	return 0;

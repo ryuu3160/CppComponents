@@ -373,7 +373,7 @@ void DX11_Initialize::DebugOutput_LiveObjects()
 {
 	if (m_pDebug2)
 	{
-		m_pDebug2->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
+		//m_pDebug2->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
 		OutputDebugStringA(">>>>>>>>> DebugOutput_LiveObjects\n>>>>>>>>> デバッグ出力完了\n");
 	}
 	else

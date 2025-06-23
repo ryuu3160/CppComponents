@@ -14,11 +14,19 @@ void RandomModuleTest()
 	pRandom->enableMT();
 
 	std::string str;
-	for (int i = 0; i < 30; i++)
+	std::vector<std::string> vstr;
+	std::vector<std::string> Sample;
+	vstr.push_back("Hello");
+	vstr.push_back("World");
+	vstr.push_back("Random");
+	vstr.push_back("Module");
+	for (int i = 0; i < 10; i++)
 	{
-		str = pRandom->Choice("A");
+		Sample = pRandom->Sample(vstr, 2);
 
-		std::cout << str;
+		for (auto &itr : Sample)
+			std::cout << itr << "	";
+		std::cout << std::endl;
 	}
 	
 	delete pRandom;

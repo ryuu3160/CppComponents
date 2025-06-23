@@ -22,6 +22,8 @@ Window::Window()
 	m_unWidth = 0;
 	m_unHeight = 0;
 	m_rcWindowRect = { 0, 0, 0, 0 };
+	m_bIsCloseWindow = false;
+	m_msgRoop = {};
 
 	// 既定のアイコン
 	m_hIconInstance = NULL;
@@ -160,7 +162,32 @@ void Window::SetWindowPosCenter()
 	SetWindowPos(m_hWnd, NULL, m_nX, m_nY, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 }
 
-inline HWND& Window::GetHwnd() noexcept
+bool Window::MessageLoop()
+{
+	if (PeekMessage(&m_msgRoop, NULL, 0, 0, PM_NOREMOVE))
+	{
+		if (!GetMessage(&m_msgRoop, NULL, 0, 0))
+		{
+			m_bIsCloseWindow = true;	// ウィンドウを閉じるフラグを立てる
+		}
+		else
+		{
+			TranslateMessage(&m_msgRoop);
+			DispatchMessage(&m_msgRoop);
+		}
+
+		return false;
+	}
+
+	return true;
+}
+
+bool Window::IsLoop() const noexcept
+{
+	return !m_bIsCloseWindow;
+}
+
+inline HWND &Window::GetHwnd() noexcept
 {
 	return m_hWnd;
 }
