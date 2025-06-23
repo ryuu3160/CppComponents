@@ -71,41 +71,41 @@ public:
 	/// ウィンドウハンドルの取得
 	/// </summary>
 	/// <returns>ウィンドウハンドル</returns>
-	inline HWND& GetHwnd() noexcept;
+	inline HWND& GetHwnd() noexcept { return m_hWnd;}
 	/// <summary>
 	/// ウィンドウの横幅を取得
 	/// </summary>
 	/// <returns>横幅(UINT型)</returns>
-	inline UINT GetWidth() const noexcept;
+	inline UINT GetWidth() const noexcept { return m_unWidth; }
 	/// <summary>
 	/// ウィンドウの縦幅を取得
 	/// </summary>
 	/// <returns>縦幅(UINT型)</returns>
-	inline UINT GetHeight() const noexcept;
+	inline UINT GetHeight() const noexcept { return m_unHeight; }
 
 	/// <summary>
 	/// タイトルバーの表示名を取得
 	/// </summary>
 	/// <returns>タイトルバーの表示名</returns>
-	inline LPCSTR GetTitleName() const noexcept;
+	inline LPCSTR GetTitleName() const noexcept { return m_lpcTitleName; }
 
 	/// <summary>
 	/// ウィンドウクラス名の取得
 	/// </summary>
 	/// <returns>ウィンドウクラス名</returns>
-	inline LPCSTR GetClassName() const noexcept;
+	inline LPCSTR GetClassName() const noexcept { return m_lpcClassName; }
 
 	/// <summary>
 	/// 親ウィンドウのハンドルを取得
 	/// </summary>
 	/// <returns>親ウィンドウのハンドル</returns>
-	inline HWND &GetParentHwnd() noexcept;
+	inline HWND &GetParentHwnd() noexcept { return m_hWndParent; }
 
 	/// <summary>
 	/// クラスネームの設定
 	/// </summary>
 	/// <param name="[In_alpcName]">クラス名</param>
-	void SetClassName(_In_ const LPCSTR& In_alpcName);
+	void SetClassName(_In_ const LPCSTR &In_alpcName);
 
 	/// <summary>
 	/// 親ウィンドウの設定

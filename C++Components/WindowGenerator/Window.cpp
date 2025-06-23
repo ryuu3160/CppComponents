@@ -188,36 +188,6 @@ bool Window::IsLoop() const noexcept
 	return !m_bIsCloseWindow;
 }
 
-inline HWND &Window::GetHwnd() noexcept
-{
-	return m_hWnd;
-}
-
-inline UINT Window::GetWidth() const noexcept
-{
-	return m_unWidth;
-}
-
-inline UINT Window::GetHeight() const noexcept
-{
-	return m_unHeight;
-}
-
-LPCSTR Window::GetTitleName() const
-{
-	return m_lpcTitleName;
-}
-
-LPCSTR Window::GetClassName() const
-{
-	return m_lpcClassName;
-}
-
-HWND &Window::GetParentHwnd() noexcept
-{
-	return m_hWndParent;
-}
-
 void Window::SetClassName(_In_ const LPCSTR& In_alpcName)
 {
 	m_lpcClassName = In_alpcName;
