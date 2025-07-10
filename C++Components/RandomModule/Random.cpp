@@ -156,7 +156,6 @@ float Random::GetDecimalRange(float fMax, float fMin, int nPointPos) const
 	int nSetPointPos;
 	int nMaxVal;
 	int nMinVal;
-	auto param = m_dist->param(); // 現在の乱数の最大値を保存
 
 	//10を、表示したい少数の位だけ累乗した数値
 	nSetPointPos = static_cast<int>(pow(10, nPointPos));
@@ -170,7 +169,7 @@ float Random::GetDecimalRange(float fMax, float fMin, int nPointPos) const
 	nMaxVal -= nMinVal;
 
 	// 生成できる乱数の最大値が生成する最大値よりも小さい場合は、最大値を変更
-	if (nMaxVal > RAND_MAX)
+	if (m_bMT && nMaxVal > RAND_MAX)
 	{
 		std::uniform_real_distribution<float>::param_type SetParam(0, static_cast<float>(nMaxVal));
 		m_dist->param(SetParam);
@@ -179,6 +178,8 @@ float Random::GetDecimalRange(float fMax, float fMin, int nPointPos) const
 	//乱数を最大値から最小値を引いた値で割った余りに最小値を足して、小数点の位置をずらす
 	if (m_bMT)
 	{
+		auto param = m_dist->param(); // 現在の乱数の最大値を保存
+
 		fRandom = static_cast<float>(static_cast<int>((*m_dist)(*m_mt)) % nMaxVal + nMinVal);
 		fRandom /= nSetPointPos;
 
