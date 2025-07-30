@@ -140,7 +140,7 @@ public:
 	/// <param name="[In_lfUnderline]">下線付きかどうか</param>
 	/// <param name="[In_lfStrikeOut]">取り消し線付きかどうか</param>
 	/// <param name="[In_lfCharSet]">文字セット</param>
-	void SetCompositionFont(int In_nFontSizeHeight, int In_nFontSizeWidth = 0, BYTE In_lfWeight = FW_NORMAL,
+	void SetCompositionFont(int In_nFontSizeHeight, int In_nFontSizeWidth = 0, LONG In_lfWeight = FW_NORMAL,
 		BYTE In_lfItalic = false, BYTE In_lfUnderline = false, BYTE In_lfStrikeOut = false, BYTE In_lfCharSet = DEFAULT_CHARSET);
 
 	/// <summary>
