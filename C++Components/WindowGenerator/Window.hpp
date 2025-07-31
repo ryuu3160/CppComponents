@@ -173,7 +173,7 @@ public:
 	/// </summary>
 	/// <param name="[In_Function]">クラスメンバ以外の関数</param>
 	/// <param name="[In_strNotifyName]">通知名(指定しない場合はdefault)</param>
-	void AppendFunction(std::function<void(HWND, UINT, WPARAM, LPARAM)> In_Function);
+	void AppendFunction(std::function<LRESULT(HWND, UINT, WPARAM, LPARAM)> In_Function);
 
 	/**
 	* @brief カスタムプロシージャを登録する
@@ -250,5 +250,5 @@ private:
 	LPVOID m_lpParam;
 
 	// カスタムプロシージャを登録するための関数ポインタのキュー
-	static std::deque<std::function<void(HWND, UINT, WPARAM, LPARAM)>> m_CustomProcQueue;
+	static std::deque<std::function<LRESULT(HWND, UINT, WPARAM, LPARAM)>> m_CustomProcQueue;
 };
