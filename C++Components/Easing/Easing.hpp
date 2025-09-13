@@ -24,37 +24,38 @@ namespace Ease
 	// ==============================
 	enum EasingType : unsigned int
 	{
-		LERP,		// ê¸å`ï‚ä‘
-		IN_SINE,	// Ease-In Sine
-		IN_QUAD,	// Ease-In Quad
-		IN_CUBIC,	// Ease-In Cubic
-		IN_QUART,	// Ease-In Quart
-		IN_QUINT,	// Ease-In Quint
-		IN_EXPO,	// Ease-In Expo
-		IN_CIRC,	// Ease-In Circ
-		IN_BACK,	// Ease-In Back
-		IN_ELASTIC,	// Ease-In Elastic
-		IN_BOUNCE,	// Ease-In Bounce
-		OUT_SINE,	// Ease-Out Sine
-		OUT_QUAD,	// Ease-Out Quad
-		OUT_CUBIC,	// Ease-Out Cubic
-		OUT_QUART,	// Ease-Out Quart
-		OUT_QUINT,	// Ease-Out Quint
-		OUT_EXPO,	// Ease-Out Expo
-		OUT_CIRC,	// Ease-Out Circ
-		OUT_BACK,	// Ease-Out Back
-		OUT_ELASTIC,// Ease-Out Elastic
-		OUT_BOUNCE,// Ease-Out Bounce
-		IN_OUT_SINE,   // Ease-InOut Sine
-		IN_OUT_QUAD,   // Ease-InOut Quad
-		IN_OUT_CUBIC,  // Ease-InOut Cubic
-		IN_OUT_QUART,  // Ease-InOut Quart
-		IN_OUT_QUINT,  // Ease-InOut Quint
-		IN_OUT_EXPO,   // Ease-InOut Expo
-		IN_OUT_CIRC,   // Ease-InOut Circ
-		IN_OUT_BACK,   // Ease-InOut Back
-		IN_OUT_ELASTIC,// Ease-InOut Elastic
-		IN_OUT_BOUNCE  // Ease-InOut Bounce
+		LERP,			// ê¸å`ï‚ä‘
+		IN_SINE,		// Ease-In Sine
+		IN_QUAD,		// Ease-In Quad
+		IN_CUBIC,		// Ease-In Cubic
+		IN_QUART,		// Ease-In Quart
+		IN_QUINT,		// Ease-In Quint
+		IN_EXPO,		// Ease-In Expo
+		IN_CIRC,		// Ease-In Circ
+		IN_BACK,		// Ease-In Back
+		IN_ELASTIC,		// Ease-In Elastic
+		IN_BOUNCE,		// Ease-In Bounce
+		OUT_SINE,		// Ease-Out Sine
+		OUT_QUAD,		// Ease-Out Quad
+		OUT_CUBIC,		// Ease-Out Cubic
+		OUT_QUART,		// Ease-Out Quart
+		OUT_QUINT,		// Ease-Out Quint
+		OUT_EXPO,		// Ease-Out Expo
+		OUT_CIRC,		// Ease-Out Circ
+		OUT_BACK,		// Ease-Out Back
+		OUT_ELASTIC,	// Ease-Out Elastic
+		OUT_BOUNCE,		// Ease-Out Bounce
+		IN_OUT_SINE,	// Ease-InOut Sine
+		IN_OUT_QUAD,	// Ease-InOut Quad
+		IN_OUT_CUBIC,	// Ease-InOut Cubic
+		IN_OUT_QUART,	// Ease-InOut Quart
+		IN_OUT_QUINT,	// Ease-InOut Quint
+		IN_OUT_EXPO,	// Ease-InOut Expo
+		IN_OUT_CIRC,	// Ease-InOut Circ
+		IN_OUT_BACK,	// Ease-InOut Back
+		IN_OUT_ELASTIC,	// Ease-InOut Elastic
+		IN_OUT_BOUNCE,	// Ease-InOut Bounce
+		MAX				// ç≈ëÂíl
 	};
 
 	// ==============================
