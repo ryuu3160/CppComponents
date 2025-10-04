@@ -14,6 +14,7 @@
 //	include
 // ==============================
 #include <Windows.h>
+#include <string>
 #include "../Singleton/Singleton.hpp"
 
 // メンバ関数にGetClassNameがあるため、マクロを無効化
@@ -194,7 +195,7 @@ private:
 	// カーソルアイコン
 	HINSTANCE m_hCursorInstance;
 	LPCTSTR m_lpcCursorName;
-	
+
 	UINT m_unStyle;			// ウィンドウ挙動
 	LPCSTR m_lpcClassName;	// ウィンドウを識別するためのクラス名
 
@@ -222,4 +223,11 @@ private:
 	// これを指定しない場合はNULLを指定する
 	// このメッセージは、戻る前に、この関数によって作成されたウィンドウに送信される
 	LPVOID m_lpParam;
+
+	// デバッグ用
+#ifdef _DEBUG
+	DWORD FpsCount = 0;	// FPSカウント
+	DWORD FPS = 0;		// 直近のFPS
+	DWORD FpsTime = 0;
+#endif // _DEBUG
 };

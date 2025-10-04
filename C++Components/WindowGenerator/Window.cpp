@@ -131,7 +131,7 @@ void Window::Create(_In_ LPCTSTR In_lpcTitleName, _In_ UINT In_unWidth, _In_ UIN
 		m_nX, m_nY,									// ウィンドウの表示位置
 		m_rcWindowRect.right - m_rcWindowRect.left, // ウィンドウの幅
 		m_rcWindowRect.bottom - m_rcWindowRect.top,	// ウィンドウの高さ
-		m_hWndParent,								// 親ウィンドウのハンドル	
+		m_hWndParent,								// 親ウィンドウのハンドル
 		m_hMenu,									// メニューハンドル
 		In_hInstance,								// インスタンスハンドル
 		m_lpParam									// CREATESTRUCT構造体へのポインタ
@@ -179,6 +179,25 @@ bool Window::MessageLoop()
 
 		return false;
 	}
+
+	// FPSの計測
+#ifdef _DEBUG
+
+	++FpsCount;// 処理回数をカウント
+
+	if (timeGetTime() - FpsTime >= 1000)	// 1000ms経過したら
+	{
+		// 整数型から文字列へ変換
+		std::string mes = m_lpcTitleName;
+		mes += " [fps]:" + std::to_string(FpsCount);
+
+		SetWindowTextA(m_hWnd, mes.c_str());	// FPSの表示
+
+		// 次の計測の準備
+		FpsCount = 0;
+		FpsTime = timeGetTime();
+	}
+#endif // _DEBUG
 
 	return true;
 }
