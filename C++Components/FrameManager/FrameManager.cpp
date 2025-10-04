@@ -42,12 +42,34 @@ bool FrameManager::UpdateMain()
 	if (m_dwTime - m_dwOldTime >= 1000 / m_fMainFps)
 	{
 		m_dwOldTime = m_dwTime;
+
+		// FPSの計測
+#ifdef _DEBUG
+		// Windowハンドルが取得出来ている場合のみ
+		if (m_hWnd != nullptr)
+		{
+			++FpsCount;// 処理回数をカウント
+
+			if (timeGetTime() - FpsTime >= 1000)	// 1000ms経過したら
+			{
+				// 整数型から文字列へ変換
+				std::string mes = m_lpcTitleName;	// ウィンドウタイトルの取得
+				mes += " [fps]:" + std::to_string(FpsCount);
+
+				SetWindowTextA(m_hWnd, mes.c_str());	// FPSの表示
+
+				// 次の計測の準備
+				FpsCount = 0;
+				FpsTime = timeGetTime();
+			}
+		}
+#endif // _DEBUG
 		return true;
 	}
 	return false;
 }
 
-DWORD FrameManager::GetMainTime()
+DWORD FrameManager::GetMainTime() const
 {
 	return m_dwTime;
 }
@@ -79,7 +101,7 @@ void FrameManager::AppendInterval(const std::string &In_strName, float In_fTrueF
 {
 	// スレッドセーフにするためのロック
 	std::lock_guard<std::mutex> lock(m_mutexInterval);
-	
+
 	// 重複チェック
 	CheckExistsLimitAndInterval(In_strName);
 
@@ -171,7 +193,7 @@ void FrameManager::AppendTimeCounter(const std::string &In_strName, bool In_bIsS
 
 	TimeCountData data{};
 	data.m_dwCount = 0;
-	
+
 	// すぐに計測を始めるかどうか
 	if (In_bIsStartNow)
 		data.m_bIsStart = true;

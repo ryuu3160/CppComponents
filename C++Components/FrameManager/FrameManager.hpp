@@ -44,7 +44,7 @@ public:
 	/// 現在時間の取得（main）
 	/// </summary>
 	/// <returns>現在時間（ms）</returns>
-	DWORD GetMainTime();
+	DWORD GetMainTime() const;
 
 	/// <summary>
 	/// <para>フレームレート制限の追加</para>
@@ -166,6 +166,18 @@ public:
 	/// <param name="[In_strName]">フレームデータ名</param>
 	void Delete(const std::string &In_strName);
 
+	/// <summary>
+	/// fpsを表示するウィンドウのハンドルを設定(デバッグ用)
+	/// </summary>
+	/// <param name="In_hWnd">設定するウィンドウハンドル。</param>
+	void _SetHwnd(HWND In_hWnd) { m_hWnd = In_hWnd; }
+
+	/// <summary>
+	/// ウィンドウのタイトルを設定します。
+	/// </summary>
+	/// <param name="In_lpcTitleName">設定するウィンドウタイトルの文字列（LPCSTR型）。</param>
+	void _SetWindowTitle(LPCSTR In_lpcTitleName) { m_lpcTitleName = In_lpcTitleName; }
+
 private:
 	FrameManager();
 	~FrameManager();
@@ -215,6 +227,15 @@ private:
 	std::unordered_map<std::string, FrameLimitData> m_mapFrameLimitData;	// フレームデータ
 	std::unordered_map<std::string, IntervalData> m_mapIntervalData;		// インターバルデータ
 	std::unordered_map<std::string, TimeCountData> m_mapTimeCounter;		// 時間計測用
+
+	// デバッグ用
+#ifdef _DEBUG
+	HWND m_hWnd = nullptr;	// デバッグ用ウィンドウハンドル
+	LPCSTR m_lpcTitleName = "";	// タイトルバーの表示名
+	DWORD FpsCount = 0;	// FPSカウント
+	DWORD FPS = 0;		// 直近のFPS
+	DWORD FpsTime = 0;
+#endif // _DEBUG
 private:
 
 	/// <summary>

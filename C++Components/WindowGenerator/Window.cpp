@@ -192,25 +192,6 @@ bool Window::MessageLoop()
 		return false;
 	}
 
-	// FPSの計測
-#ifdef _DEBUG
-
-	++FpsCount;// 処理回数をカウント
-
-	if (timeGetTime() - FpsTime >= 1000)	// 1000ms経過したら
-	{
-		// 整数型から文字列へ変換
-		std::string mes = m_lpcTitleName;
-		mes += " [fps]:" + std::to_string(FpsCount);
-
-		SetWindowTextA(m_hWnd, mes.c_str());	// FPSの表示
-
-		// 次の計測の準備
-		FpsCount = 0;
-		FpsTime = timeGetTime();
-	}
-#endif // _DEBUG
-
 	return true;
 }
 

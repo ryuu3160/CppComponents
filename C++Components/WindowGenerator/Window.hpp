@@ -252,11 +252,4 @@ private:
 
 	// カスタムプロシージャを登録するための関数ポインタのキュー
 	static std::deque<std::function<LRESULT(HWND, UINT, WPARAM, LPARAM)>> m_CustomProcQueue;
-
-	// デバッグ用
-#ifdef _DEBUG
-	DWORD FpsCount = 0;	// FPSカウント
-	DWORD FPS = 0;		// 直近のFPS
-	DWORD FpsTime = 0;
-#endif // _DEBUG
 };
