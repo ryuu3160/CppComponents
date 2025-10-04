@@ -276,7 +276,7 @@ void Window::SetCreateStructParam(_In_ LPMDICREATESTRUCT In_lpParam)
 	m_lpParam = In_lpParam;
 }
 
-void Window::AppendFunction(std::function<LRESULT(HWND, UINT, WPARAM, LPARAM)> In_Function)
+void Window::AddCustomProc(std::function<LRESULT(HWND, UINT, WPARAM, LPARAM)> In_Function)
 {
 	m_CustomProcQueue.push_back(In_Function);
 }
