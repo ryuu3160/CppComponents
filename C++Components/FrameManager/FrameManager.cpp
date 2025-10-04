@@ -14,6 +14,7 @@
 //	include
 // ==============================
 #include "FrameManager.hpp"
+#include <string>
 #include <future>
 
 void FrameManager::Init(float In_fFps)
