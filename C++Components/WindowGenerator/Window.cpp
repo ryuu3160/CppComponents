@@ -15,6 +15,11 @@
 #include "Window.hpp"
 #include <Windows.h>
 
+// ==============================
+//  staticメンバ変数の初期化
+// ==============================
+std::deque<std::function<LRESULT(HWND, UINT, WPARAM, LPARAM)>> Window::m_CustomProcQueue;
+
 Window::Window()
 {
 	// 初期化
@@ -64,6 +69,13 @@ Window::~Window()
 
 LRESULT CALLBACK Window::m_WndProc(_In_ HWND In_hWnd, _In_ UINT In_unMessage, _In_ WPARAM In_wParam, _In_ LPARAM In_lParam)
 {
+	for (auto &func : m_CustomProcQueue)
+	{
+		// 登録されたカスタムプロシージャを呼び出す
+		if (func(In_hWnd, In_unMessage, In_wParam, In_lParam))
+			return true;
+	}
+
 	switch (In_unMessage)
 	{
 		// xボタンが押されたときのメッセージ
@@ -262,4 +274,9 @@ void Window::SetCreateStructParam(_In_ LPCLIENTCREATESTRUCT In_lpParam)
 void Window::SetCreateStructParam(_In_ LPMDICREATESTRUCT In_lpParam)
 {
 	m_lpParam = In_lpParam;
+}
+
+void Window::AppendFunction(std::function<LRESULT(HWND, UINT, WPARAM, LPARAM)> In_Function)
+{
+	m_CustomProcQueue.push_back(In_Function);
 }

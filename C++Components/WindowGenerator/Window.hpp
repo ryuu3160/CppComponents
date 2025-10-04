@@ -14,6 +14,8 @@
 //	include
 // ==============================
 #include <Windows.h>
+#include <deque>
+#include <functional>
 #include <string>
 #include "../Singleton/Singleton.hpp"
 
@@ -45,7 +47,7 @@ public:
 	/// <param name="[In_nHeight]">ウィンドウの縦幅</param>
 	/// <param name="[In_hInstance]">WinMainの引数にあるインスタンスハンドル</param>
 	/// <param name="[In_nCmdShow]">ウィンドウの表示方法</param>
-	void Create(_In_ LPCTSTR In_lpcTitleName, _In_ UINT In_unWidth, UINT In_unHeight, _In_ HINSTANCE In_hInstance, _In_ int In_nCmdShow = SW_SHOWDEFAULT);
+	void Create(_In_ LPCTSTR In_lpcTitleName, _In_ UINT In_unWidth, _In_ UINT In_unHeight, _In_ HINSTANCE In_hInstance, _In_ int In_nCmdShow = SW_SHOWDEFAULT);
 
 	/// <summary>
 	/// ウィンドウを画面中央に移動
@@ -167,6 +169,30 @@ public:
 	/// <param name="[lpParam]">MDICREATESTRUCTへのポインタ</param>
 	void SetCreateStructParam(_In_ LPMDICREATESTRUCT In_lpParam);
 
+	/// <summary>
+	/// カスタムプロシージャを登録する
+	/// </summary>
+	/// <param name="[In_Function]">クラスメンバ以外の関数</param>
+	/// <param name="[In_strNotifyName]">通知名(指定しない場合はdefault)</param>
+	void AppendFunction(std::function<LRESULT(HWND, UINT, WPARAM, LPARAM)> In_Function);
+
+	/**
+	* @brief カスタムプロシージャを登録する
+	* @tparam [_Func] 登録する関数の型
+	* @tparam [_Instance] 登録する関数のインスタンスの型
+	* @param [In_Function] 登録するクラスのメンバ関数への右辺値参照
+	* @param [In_Instance] 上記クラスのインスタンスへの右辺値参照
+	* @details 使用例 :
+						対象クラスのインスタンスが静的オブジェクト(newを使用していない)の場合 : AppendFunction(&Class::Function, &Instance);
+						対象クラスのインスタンスが動的オブジェクト(newで確保されている)の場合 : AppendFunction(&Class::Function, Instance);
+	*/
+	template<typename _Func, typename _Instance>
+	void AddCustomProc(_Func &&In_Function, _Instance &&In_Instance)
+	{
+		// 関数ポインタをキューに追加
+		m_CustomProcQueue.push_back(std::bind(std::forward<_Func>(In_Function), std::forward<_Instance>(In_Instance)));
+	}
+
 private:
 	/// <summary>
 	/// コンストラクタ
@@ -195,9 +221,9 @@ private:
 	// カーソルアイコン
 	HINSTANCE m_hCursorInstance;
 	LPCTSTR m_lpcCursorName;
-
-	UINT m_unStyle;			// ウィンドウ挙動
+	
 	LPCSTR m_lpcClassName;	// ウィンドウを識別するためのクラス名
+	UINT m_unStyle;			// ウィンドウ挙動
 
 	// ウィンドウのスタイル
 	DWORD m_dwStyle;
@@ -223,6 +249,9 @@ private:
 	// これを指定しない場合はNULLを指定する
 	// このメッセージは、戻る前に、この関数によって作成されたウィンドウに送信される
 	LPVOID m_lpParam;
+
+	// カスタムプロシージャを登録するための関数ポインタのキュー
+	static std::deque<std::function<LRESULT(HWND, UINT, WPARAM, LPARAM)>> m_CustomProcQueue;
 
 	// デバッグ用
 #ifdef _DEBUG
