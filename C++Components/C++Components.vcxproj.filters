@@ -50,6 +50,9 @@
     <Filter Include="DirectX11\Assets\Shader">
       <UniqueIdentifier>{28de7c58-8a7a-4811-ad75-ec13e7e42efd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameManager\Timer">
+      <UniqueIdentifier>{ffc7a935-273d-4b08-9dc7-26c403a76c30}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton\Singleton.hpp">
@@ -112,6 +115,9 @@
     <ClInclude Include="_Manual_\ObserverManual.hpp">
       <Filter>_Manual_</Filter>
     </ClInclude>
+    <ClInclude Include="FrameManager\Timer\Timer.hpp">
+      <Filter>FrameManager\Timer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Singleton\SingletonController.cpp">
@@ -161,6 +167,9 @@
     </ClCompile>
     <ClCompile Include="DirectX11\System\Sprite.cpp">
       <Filter>DirectX11\System</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameManager\Timer\Timer.cpp">
+      <Filter>FrameManager\Timer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
