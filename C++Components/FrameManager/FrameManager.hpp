@@ -17,6 +17,7 @@
 #include "../Singleton/Singleton.hpp"
 #include <windows.h>
 #include <unordered_map>
+#include <string>
 // timeGetTime‚È‚Ç‚ðŽg‚¤‚½‚ß‚É•K—v
 #include <mmsystem.h>
 #pragma comment(lib, "winmm.lib")
