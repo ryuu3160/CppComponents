@@ -168,6 +168,10 @@
     <ClInclude Include="FrameManager\FrameManager.hpp" />
     <ClInclude Include="FrameManager\Timer\Timer.hpp" />
     <ClInclude Include="IME_Controller\IME.hpp" />
+    <ClInclude Include="MultiComparison\MultiComparison.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Observer\Observer.hpp" />
     <ClInclude Include="RandomModule\Random.hpp" />
     <ClInclude Include="Singleton\Singleton.hpp" />

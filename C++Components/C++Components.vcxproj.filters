@@ -53,6 +53,9 @@
     <Filter Include="FrameManager\Timer">
       <UniqueIdentifier>{ffc7a935-273d-4b08-9dc7-26c403a76c30}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MultiComparison">
+      <UniqueIdentifier>{6bf7e111-38d4-4dbb-8694-931eaa650b7f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton\Singleton.hpp">
@@ -117,6 +120,9 @@
     </ClInclude>
     <ClInclude Include="FrameManager\Timer\Timer.hpp">
       <Filter>FrameManager\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiComparison\MultiComparison.hpp">
+      <Filter>MultiComparison</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
