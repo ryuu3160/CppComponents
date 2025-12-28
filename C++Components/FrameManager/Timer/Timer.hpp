@@ -9,6 +9,7 @@
 // ==============================
 //	include
 // ==============================
+#include <Windows.h>
 #include <string>
 #include <unordered_map>
 #include <mutex>

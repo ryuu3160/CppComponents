@@ -22,6 +22,9 @@
 #include <mmsystem.h>
 #pragma comment(lib, "winmm.lib")
 
+#undef min
+#undef max
+
 /// <summary>
 /// フレームレート管理クラス
 /// </summary>
