@@ -3,6 +3,7 @@
 	 Summary: ランダムモジュールプログラムのヘッダ
 	 Author: ryuu3160
 	 Date: 2024/03/17 初回作成
+		   2025/12/28 MTに完全移行
 
 	 (C) 2024 ryuu3160. All rights reserved.
  ===================================================================+*/
@@ -25,28 +26,11 @@ public:
 	/// </summary>
 	/// <memo>シード値を特に決めない場合はこのコンストラクタを使用する</memo>
 	Random();
-	/// <summary>
-	/// <para>引数ありコンストラクタ</para>
-	/// <para>引数がシード値として記録される</para>
-	/// </summary>
-	/// <param name="[nSeed]">シード値</param>
-	/// <memo>シード値を指定したい場合はこのコンストラクタを使用する</memo>
-	Random(unsigned int nSeed);
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
 	~Random();
-
-	/// <summary>
-	/// メルセンヌ・ツイスタ―の有効化
-	/// </summary>
-	void enableMT();
-
-	/// <summary>
-	/// メルセンヌ・ツイスタ―の無効化
-	/// </summary>
-	void disableMT();
 
 	/// <summary>
 	/// 呼び出し時の時間を使用してシード値を設定する
@@ -62,20 +46,13 @@ public:
 	void SetSeed(unsigned int nSeed);
 
 	/// <summary>
-	/// 呼び出し時に設定されているシード値を表示する
-	/// </summary>
-	/// <returns>シード値</returns>
-	/// <memo>メンバ変数nSeedに記録されている値を返す</memo>
-	unsigned int GetSeed(void) const;
-
-	/// <summary>
 	/// 整数値の乱数を生成する
 	/// </summary>
 	/// <param name="[nMax]">生成する乱数の最大値</param>
 	/// <param name="[bIncludeZero]">生成する乱数の最小値が0かを指定(true:0 | false:1)</param>
 	/// <returns>生成した乱数をint型で返す</returns>
 	/// <memo>シード値は必ず設定されているので、この関数が失敗することは無い</memo>
-	int GetInteger(int nMax, bool bIncludeZero) const;
+	int GetInteger(int nMax, bool bIncludeZero);
 
 	/// <summary>
 	/// 指定範囲で整数値の乱数を生成する
@@ -84,7 +61,7 @@ public:
 	/// <param name="[nMin]">生成する乱数の最小値</param>
 	/// <returns>生成した乱数をint型で返す</returns>
 	/// <memo>シード値は必ず設定されているので、この関数が失敗することは無い</memo>
-	int GetIntegerRange(int nMax, int nMin) const;
+	int GetIntegerRange(int nMax, int nMin);
 
 	/// <summary>
 	/// 小数値の乱数を生成する
@@ -94,7 +71,7 @@ public:
 	/// <param name="[bIncludeZero]">生成する乱数の最小値が0かを指定(true:0 | false:1)</param>
 	/// <returns>生成した乱数をfloat型で返す</returns>
 	/// <memo>シード値は必ず設定されているので、この関数が失敗することは無い</memo>
-	float GetDecimal(int nMax, int nPointPos, bool bIncludeZero) const;
+	float GetDecimal(int nMax, int nPointPos, bool bIncludeZero);
 
 	/// <summary>
 	/// 指定範囲で小数点値の乱数を生成する
@@ -104,7 +81,7 @@ public:
 	/// <param name="[nPointPos]">生成する乱数の小数点位置 | 例：小数点第1位 → 1 | 第2位 → 2</param>
 	/// <returns>生成した乱数をfloat型で返す</returns>
 	/// <memo>シード値は必ず設定されているので、この関数が失敗することは無い</memo>
-	float GetDecimalRange(float fMax, float fMin, int fPointPos) const;
+	float GetDecimalRange(float fMax, float fMin, int fPointPos);
 
 	/// <summary>
 	/// 与えた複数の文字列からランダムで1つを返す
@@ -114,7 +91,7 @@ public:
 	/// <memo>シード値は必ず設定されているので、この関数が失敗することは無い</memo>
 	/// <memo>引数に文字列以外を渡すとエラーになる</memo>
 	template<typename ...A>
-	std::string Choice(A... args) const;
+	std::string Choice(A... args);
 
 	/// <summary>
 	/// 複数のデータが格納されたvectorからランダムで1つを返す
@@ -122,7 +99,7 @@ public:
 	/// <param name="[aray]">vectorのインスタンスへの参照</param>
 	/// <returns>vectorの型と同じ型</returns>
 	template<typename T>
-	T Choice(const std::vector<T>& aray) const;
+	T Choice(const std::vector<T>& aray);
 
 	/// <summary>
 	/// 複数のデータが格納されたlistからランダムで1つを返す
@@ -130,7 +107,7 @@ public:
 	/// <param name="[aray]">listのインスタンスへの参照</param>
 	/// <returns>listの型と同じ型</returns>
 	template<typename T>
-	T Choice(const std::list<T>& aray) const;
+	T Choice(const std::list<T>& aray);
 
 	/// <summary>
 	/// <para>引数で与えたvectorのデータからランダムに複数の要素を選択してvectorとして返す</para>
@@ -141,7 +118,7 @@ public:
 	/// <returns>vectorクラス</returns>
 	/// <memo>取得する要素数は元のvectorの要素数より大きくすることは出来ない</memo>
 	template<typename T>
-	std::vector<T> Sample(const std::vector<T> &aray, int num) const;
+	std::vector<T> Sample(const std::vector<T> &aray, int num);
 
 	/// <summary>
 	/// <para>引数で与えたlistのデータからランダムに複数の要素を選択してlistとして返す</para>
@@ -152,7 +129,7 @@ public:
 	/// <returns>listクラス</returns>
 	/// <memo>取得する要素数は元のvectorの要素数より大きくすることは出来ない</memo>
 	template<typename T>
-	std::list<T> Sample(const std::list<T>& aray, int num) const;
+	std::list<T> Sample(const std::list<T>& aray, int num);
 
 	/// <summary>
 	/// <para>引数で与えたvectorのデータからランダムに複数の要素を選択してvectorとして返す</para>
@@ -163,7 +140,7 @@ public:
 	/// <returns>vectorクラス</returns>
 	/// <memo>取得する要素数は元のvectorの要素数より大きくすることが出来る</memo>
 	template<typename T>
-	std::vector<T> Choices(const std::vector<T>& aray, int k) const;
+	std::vector<T> Choices(const std::vector<T>& aray, int k);
 
 	/// <summary>
 	/// <para>引数で与えたlistのデータからランダムに複数の要素を選択してlistとして返す</para>
@@ -174,14 +151,11 @@ public:
 	/// <returns>listクラス</returns>
 	/// <memo>取得する要素数は元のvectorの要素数より大きくすることが出来る</memo>
 	template<typename T>
-	std::list<T> Choices(const std::list<T>& aray, int k) const;
+	std::list<T> Choices(const std::list<T>& aray, int k);
 
 private:
-	unsigned int m_nSeed;
-	bool m_bMT;//メルセンヌツイスターを使用するか
-	std::random_device* m_rd;//非決定的な乱数生成
-	std::mt19937* m_mt;//メルセンヌツイスター
-	std::uniform_real_distribution<float>* m_dist;//一様分布生成器
+	std::mt19937 m_mt;//メルセンヌツイスター
+	std::uniform_real_distribution<float> m_dist;//一様分布生成器
 };
 
 
@@ -195,7 +169,7 @@ private:
 /// <memo>シード値は必ず設定されているので、この関数が失敗することは無い</memo>
 /// <memo>引数に文字列以外を渡すとエラーになる</memo>
 template<typename ...A>
-std::string Random::Choice(A... args) const
+std::string Random::Choice(A... args)
 {
 	int nRandom;
 	int nCount = 0;
@@ -217,15 +191,8 @@ std::string Random::Choice(A... args) const
 		}
 	}
 
-	//返す文字列の番号決め
-	if (m_bMT)
-	{
-		nRandom = static_cast<int>((*m_dist)(*m_mt)) % nCount + 1;
-	}
-	else
-	{
-		nRandom = rand() % nCount + 1;
-	}
+	//返す文字列の番号決
+	nRandom = static_cast<int>(m_dist(m_mt)) % nCount + 1;
 
 	i = 1;//カウンタ
 
@@ -248,7 +215,7 @@ std::string Random::Choice(A... args) const
 /// <param name="[aray]">vectorのインスタンスへの参照</param>
 /// <returns>vectorの型と同じ型</returns>
 template<typename T>
-T Random::Choice(const std::vector<T>& aray) const
+T Random::Choice(const std::vector<T>& aray)
 {
 	T put;
 	int nRandom;
@@ -261,14 +228,7 @@ T Random::Choice(const std::vector<T>& aray) const
 	}
 
 	//返す文字列の番号決め
-	if (m_bMT)
-	{
-		nRandom = static_cast<int>((*m_dist)(*m_mt)) % aray.size();
-	}
-	else
-	{
-		nRandom = rand() % aray.size();
-	}
+	nRandom = static_cast<int>(m_dist(m_mt)) % aray.size();
 
 	put = aray[nRandom];
 
@@ -281,7 +241,7 @@ T Random::Choice(const std::vector<T>& aray) const
 /// <param name="[aray]">listのインスタンスへの参照</param>
 /// <returns>listの型と同じ型</returns>
 template<typename T>
-T Random::Choice(const std::list<T>& aray) const
+T Random::Choice(const std::list<T>& aray)
 {
 	T put;
 	int nRandom;
@@ -295,14 +255,7 @@ T Random::Choice(const std::list<T>& aray) const
 	}
 
 	//返す文字列の番号決め
-	if (m_bMT)
-	{
-		nRandom = static_cast<int>((*m_dist)(*m_mt)) % aray.size();
-	}
-	else
-	{
-		nRandom = rand() % aray.size();
-	}
+	nRandom = static_cast<int>(m_dist(m_mt)) % aray.size();
 
 	for (int i = 0; i < nRandom; i++)
 	{
@@ -322,7 +275,7 @@ T Random::Choice(const std::list<T>& aray) const
 /// <returns>vectorクラス</returns>
 /// <memo>取得する要素数は元のvectorの要素数より大きくすることは出来ない</memo>
 template<typename T>
-std::vector<T> Random::Sample(const std::vector<T> &aray, int num) const
+std::vector<T> Random::Sample(const std::vector<T> &aray, int num)
 {
 	std::vector<T> sample;
 	std::vector<int> Already;
@@ -342,14 +295,7 @@ std::vector<T> Random::Sample(const std::vector<T> &aray, int num) const
 	while (nPushCount < num)
 	{
 		//乱数生成
-		if (m_bMT)
-		{
-			nRandom = static_cast<int>((*m_dist)(*m_mt)) % aray.size();
-		}
-		else
-		{
-			nRandom = rand() % aray.size();
-		}
+		nRandom = static_cast<int>(m_dist(m_mt)) % aray.size();
 
 		//重複排除
 		for (int i = 0; i < Already.size(); i++)
@@ -386,7 +332,7 @@ std::vector<T> Random::Sample(const std::vector<T> &aray, int num) const
 /// <returns>listクラス</returns>
 /// <memo>取得する要素数は元のvectorの要素数より大きくすることは出来ない</memo>
 template<typename T>
-std::list<T> Random::Sample(const std::list<T>& aray, int num) const
+std::list<T> Random::Sample(const std::list<T>& aray, int num)
 {
 	std::list<T> sample;
 	std::vector<int> Already;
@@ -406,15 +352,8 @@ std::list<T> Random::Sample(const std::list<T>& aray, int num) const
 	while (nPushCount < num)
 	{
 		//乱数生成
-		if (m_bMT)
-		{
-			nRandom = static_cast<int>((*m_dist)(*m_mt)) % aray.size();
-		}
-		else
-		{
-			nRandom = rand() % aray.size();
-		}
-
+		nRandom = static_cast<int>(m_dist(m_mt)) % aray.size();
+		
 		//重複排除
 		for (int i = 0; i < Already.size(); i++)
 		{
@@ -455,7 +394,7 @@ std::list<T> Random::Sample(const std::list<T>& aray, int num) const
 /// <returns>vectorクラス</returns>
 /// <memo>取得する要素数は元のvectorの要素数より大きくすることが出来る</memo>
 template<typename T>
-std::vector<T> Random::Choices(const std::vector<T>& aray, int k) const
+std::vector<T> Random::Choices(const std::vector<T>& aray, int k)
 {
 	std::vector<T> choices;
 	int nRandom;	//プッシュするデータの要素番号
@@ -464,14 +403,8 @@ std::vector<T> Random::Choices(const std::vector<T>& aray, int k) const
 	for (int i = 0;i < k;i++)
 	{
 		//乱数生成
-		if (m_bMT)
-		{
-			nRandom = static_cast<int>((*m_dist)(*m_mt)) % aray.size();
-		}
-		else
-		{
-			nRandom = rand() % aray.size();
-		}
+		nRandom = static_cast<int>(m_dist(m_mt)) % aray.size();
+		
 		//プッシュ
 		choices.push_back(aray[nRandom]);
 	}
@@ -488,7 +421,7 @@ std::vector<T> Random::Choices(const std::vector<T>& aray, int k) const
 /// <returns>listクラス</returns>
 /// <memo>取得する要素数は元のvectorの要素数より大きくすることが出来る</memo>
 template<typename T>
-std::list<T> Random::Choices(const std::list<T>& aray, int k) const
+std::list<T> Random::Choices(const std::list<T>& aray, int k)
 {
 	std::list<T> choices;
 	int nRandom;	//プッシュするデータの要素番号
@@ -499,14 +432,7 @@ std::list<T> Random::Choices(const std::list<T>& aray, int k) const
 		//先頭イテレーター取得
 		auto itr = aray.begin();
 		//乱数生成
-		if (m_bMT)
-		{
-			nRandom = static_cast<int>((*m_dist)(*m_mt)) % aray.size();
-		}
-		else
-		{
-			nRandom = rand() % aray.size();
-		}
+		nRandom = static_cast<int>(m_dist(m_mt)) % aray.size();
 
 		for (int j = 0; j < nRandom; j++)
 		{

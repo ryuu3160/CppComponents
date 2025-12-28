@@ -14,66 +14,26 @@
 #include <stdarg.h>
 #include <string>
 
-Random::Random() : m_bMT(false), m_rd(nullptr), m_mt(nullptr), m_dist(nullptr)
+Random::Random()
+	: m_mt(std::random_device{}()), m_dist(0, RAND_MAX)
 {
-	this->m_nSeed = static_cast<unsigned int>(time(NULL));
-	srand(this->m_nSeed);
-}
-
-Random::Random(unsigned int nSeed) : m_bMT(false), m_rd(nullptr), m_mt(nullptr), m_dist(nullptr)
-{
-	this->m_nSeed = nSeed;
-	srand(this->m_nSeed);
 }
 
 Random::~Random()
 {
-	if (m_rd != nullptr)
-		delete m_rd;
-	if (m_mt != nullptr)
-		delete m_mt;
-	if (m_dist != nullptr)
-		delete m_dist;
-}
-
-void Random::enableMT()
-{
-	m_bMT = true;
-	m_rd = new std::random_device();
-	m_mt = new std::mt19937((*m_rd)());
-	m_dist = new std::uniform_real_distribution<float>(0, RAND_MAX);
-}
-
-void Random::disableMT()
-{
-	m_bMT = false;
-	delete m_dist;
-	delete m_mt;
-	delete m_rd;
-
-	m_dist = nullptr;
-	m_mt = nullptr;
-	m_rd = nullptr;
 }
 
 void Random::SetSeedTime()
 {
-	this->m_nSeed = static_cast<unsigned int>(time(NULL));
-	srand(this->m_nSeed);
+	m_mt.seed(static_cast<unsigned int>(time(NULL)));
 }
 
 void Random::SetSeed(unsigned int nSeed)
 {
-	this->m_nSeed = nSeed;
-	srand(this->m_nSeed);
+	m_mt.seed(nSeed);
 }
 
-unsigned int Random::GetSeed(void) const
-{
-	return this->m_nSeed;
-}
-
-int Random::GetInteger(int nMax, bool bIncludeZero) const
+int Random::GetInteger(int nMax, bool bIncludeZero)
 {
 	int nInZero;
 
@@ -88,33 +48,19 @@ int Random::GetInteger(int nMax, bool bIncludeZero) const
 	}
 
 	//乱数を最大値で割った余りにnInZeroを足す
-	if (m_bMT)
-	{
-		return static_cast<int>((*m_dist)(*m_mt)) % nMax + nInZero;
-	}
-	else
-	{
-		return rand() % nMax + nInZero;
-	}
+	return static_cast<int>(m_dist(m_mt)) % nMax + nInZero;
 }
 
-int Random::GetIntegerRange(int nMax, int nMin) const
+int Random::GetIntegerRange(int nMax, int nMin)
 {
 	nMax++;
 	nMax -= nMin;
 
 	//最大値を+1したものから最小値を引き、それで乱数を割った余りに最小値を足す
-	if (m_bMT)
-	{
-		return static_cast<int>((*m_dist)(*m_mt)) % nMax + nMin;
-	}
-	else
-	{
-		return rand() % nMax + nMin;
-	}
+	return static_cast<int>(m_dist(m_mt)) % nMax + nMin;
 }
 
-float Random::GetDecimal(int nMax, int nPointPos, bool bIncludeZero) const
+float Random::GetDecimal(int nMax, int nPointPos, bool bIncludeZero)
 {
 	float fRandom;
 	int nSetPointPos;
@@ -137,20 +83,13 @@ float Random::GetDecimal(int nMax, int nPointPos, bool bIncludeZero) const
 	}
 
 	//乱数を最大値で割った余りにnInZeroを足して、小数点をずらす
-	if (m_bMT)
-	{
-		fRandom = static_cast<float>(static_cast<int>((*m_dist)(*m_mt)) % nVal + nInZero);
-		fRandom /= nSetPointPos;
-	}
-	{
-		fRandom = static_cast<float>(rand() % nVal + nInZero);
-		fRandom /= nSetPointPos;
-	}
+	fRandom = static_cast<float>(static_cast<int>(m_dist(m_mt)) % nVal + nInZero);
+	fRandom /= nSetPointPos;
 
 	return fRandom;
 }
 
-float Random::GetDecimalRange(float fMax, float fMin, int nPointPos) const
+float Random::GetDecimalRange(float fMax, float fMin, int nPointPos)
 {
 	float fRandom;
 	int nSetPointPos;
@@ -169,28 +108,20 @@ float Random::GetDecimalRange(float fMax, float fMin, int nPointPos) const
 	nMaxVal -= nMinVal;
 
 	// 生成できる乱数の最大値が生成する最大値よりも小さい場合は、最大値を変更
-	if (m_bMT && nMaxVal > RAND_MAX)
+	if (nMaxVal > RAND_MAX)
 	{
 		std::uniform_real_distribution<float>::param_type SetParam(0, static_cast<float>(nMaxVal));
-		m_dist->param(SetParam);
+		m_dist.param(SetParam);
 	}
 
 	//乱数を最大値から最小値を引いた値で割った余りに最小値を足して、小数点の位置をずらす
-	if (m_bMT)
-	{
-		auto param = m_dist->param(); // 現在の乱数の最大値を保存
+	auto param = m_dist.param(); // 現在の乱数の最大値を保存
 
-		fRandom = static_cast<float>(static_cast<int>((*m_dist)(*m_mt)) % nMaxVal + nMinVal);
-		fRandom /= nSetPointPos;
+	fRandom = static_cast<float>(static_cast<int>(m_dist(m_mt)) % nMaxVal + nMinVal);
+	fRandom /= nSetPointPos;
 
-		// 生成できる乱数の最大値を元に戻す
-		m_dist->param(param);
-	}
-	else
-	{
-		fRandom = static_cast<float>(rand() % nMaxVal + nMinVal);
-		fRandom /= nSetPointPos;
-	}
+	// 生成できる乱数の最大値を元に戻す
+	m_dist.param(param);
 
 	return fRandom;
 }

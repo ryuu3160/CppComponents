@@ -11,7 +11,6 @@
 void RandomModuleTest()
 {
 	Random *pRandom = new Random();
-	pRandom->enableMT();
 
 	std::string str;
 	std::vector<std::string> vstr;
