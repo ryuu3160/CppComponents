@@ -1,7 +1,7 @@
 /*+===================================================================
 	File: Timer.cpp
 	Summary: タイマークラス
-	Author: AT13C192 01 青木雄一郎
+	Author: ryuu3160
 	Date: 2025/11/27 Thu PM 01:26:21 初回作成
 ===================================================================+*/
 
@@ -9,6 +9,7 @@
 //	include
 // ==============================
 #include "Timer.hpp"
+#include "FrameManager/FrameManager.hpp"
 
 Timer::Timer()
 	: m_FrameManager(FrameManager::GetInstance())
